@@ -14,25 +14,26 @@ module.exports = {
     //   '$': 'jquery',
     //   'jQuery': 'jquery'
     // })
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      comments: false,
-      compress: {
-        warnings: false,
-        drop_console: false // change to true in production
-      },
-      mangle: {
-        excrpt : ['$'],
-        screw_ie8 : true,
-        keep_fnames: true
-      }
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.DefinePlugin({
-        'process.env': {
-            'NODE_ENV': JSON.stringify('production')
-        }
-    })
+    // Uncomment in production
+    // new webpack.optimize.UglifyJsPlugin({
+    //   beautify: false,
+    //   comments: false,
+    //   compress: {
+    //     warnings: false,
+    //     drop_console: false
+    //   },
+    //   mangle: {
+    //     excrpt : ['$'],
+    //     screw_ie8 : true,
+    //     keep_fnames: true
+    //   }
+    // }),
+    // new webpack.optimize.DedupePlugin(),
+    // new webpack.DefinePlugin({
+    //     'process.env': {
+    //         'NODE_ENV': JSON.stringify('production')
+    //     }
+    // })
   ],
   output: {
     path: __dirname,
@@ -42,6 +43,11 @@ module.exports = {
     root: __dirname,
     alias: {
       Main: 'app/components/Main.jsx',
+      BeerFactory: 'app/components/BeerFactory.jsx',
+      Game: 'app/components/Game.jsx',
+      Login: 'app/components/Login.jsx',
+      LoginAPI: 'app/api/LoginAPI.js',
+      Instruction: 'app/components/Instruction.jsx',
       applicationStyles: 'app/styles/app.scss'
     },
     extensions: ['', '.js', '.jsx']
