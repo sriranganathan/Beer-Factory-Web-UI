@@ -1,16 +1,11 @@
 var axios = require('axios');
 var querystring = require('querystring');
 
-var LoginAPI = function (email, password, API_BASE_URL) {
-
-  var data = {
-    user_email: email,
-    user_pass: password,
-  };
+var request = function (API_BASE_URL, API_URL, data, method="post") {
 
   var config = {
-    method: 'post',
-    url: '/login',
+    method: method,
+    url: API_URL,
     baseURL: API_BASE_URL,
     data: querystring.stringify(data)
   };
@@ -29,4 +24,6 @@ var LoginAPI = function (email, password, API_BASE_URL) {
 
 }
 
-module.exports = LoginAPI;
+module.exports = {
+  request: request
+};

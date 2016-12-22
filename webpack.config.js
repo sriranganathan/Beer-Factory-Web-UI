@@ -46,7 +46,7 @@ module.exports = {
       BeerFactory: 'app/components/BeerFactory.jsx',
       Game: 'app/components/Game.jsx',
       Login: 'app/components/Login.jsx',
-      LoginAPI: 'app/api/LoginAPI.js',
+      API: 'app/api/API.js',
       Instruction: 'app/components/Instruction.jsx',
       applicationStyles: 'app/styles/app.scss'
     },

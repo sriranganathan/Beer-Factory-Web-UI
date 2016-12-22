@@ -1,5 +1,5 @@
 var React = require('react');
-var LoginAPI = require('LoginAPI');
+var API = require('API');
 var { Colors, Button, Row, Column, Alignments, Callout } = require('react-foundation');
 
 var Login = React.createClass({
@@ -39,7 +39,12 @@ var Login = React.createClass({
       submit.value = "Start Playing";
     };
 
-    LoginAPI(email, password, this.props.API_BASE_URL).then(success, failure);
+    var data = {
+      user_email: email,
+      user_pass: password
+    }
+
+    API.request(this.props.API_BASE_URL, '/login', data).then(success, failure);
 
   },
 
