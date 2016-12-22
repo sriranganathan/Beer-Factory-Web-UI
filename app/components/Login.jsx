@@ -1,14 +1,10 @@
 var React = require('react');
 var API = require('API');
+var {connect} = require('react-redux');
+var {setUserCredentials} = require('Actions');
 var { Colors, Button, Row, Column, Alignments, Callout } = require('react-foundation');
 
 var Login = React.createClass({
-
-  getInitialState : function () {
-    return {
-      err_msg: null
-    };
-  },
 
   handleSubmit : function (e) {
     e.preventDefault();
@@ -17,6 +13,7 @@ var Login = React.createClass({
     var password = this.refs.password;
     var submit = this.refs.submit;
 
+    this.refs.err_msg.innerHTML = "";
     submit.className = "button primary expanded disabled";
     submit.value = "Logging In...";
 
@@ -26,14 +23,12 @@ var Login = React.createClass({
     var success = (data) => {
       localStorage.setItem("user_id", data.user_id);
       localStorage.setItem("auth_token", data.auth_token);
-      this.props.handleStateChange(data);
+      var {dispatch} = this.props
+      dispatch(setUserCredentials(data.user_id, data.auth_token));
     };
 
     var failure = (error) => {
-      var msg = error.message;
-      this.setState({
-        err_msg: msg
-      });
+      this.refs.err_msg.innerHTML = "Error : <i><b>" + error.message + "</i></b>";
 
       submit.className = "button primary expanded hollow";
       submit.value = "Start Playing";
@@ -44,26 +39,20 @@ var Login = React.createClass({
       user_pass: password
     }
 
-    API.request(this.props.API_BASE_URL, '/login', data).then(success, failure);
+    API.request('/login', data).then(success, failure);
 
   },
 
   render : function () {
-    var error = null
-    if (this.state.err_msg) {
-      error = (
-          <Row>
-            <Column>
-              <p className="login__err-msg">Error Loggin in : {this.state.err_msg}</p>
-            </Column>
-          </Row>
-      );
-    }
     return (
       <Column medium={6} large={4} offsetOnMedium={3} offsetOnLarge={4}>
         <Callout className="login__div">
           <p className="lead login__title">Beer Factory - Login</p>
-          {error}
+          <Row>
+            <Column>
+              <p className="login__err-msg" ref="err_msg"></p>
+            </Column>
+          </Row>
           <form onSubmit={this.handleSubmit}>
             <Row>
               <Column>
@@ -87,4 +76,4 @@ var Login = React.createClass({
   }
 });
 
-module.exports = Login;
+module.exports = connect()(Login);

@@ -20,7 +20,7 @@ module.exports = {
     //   comments: false,
     //   compress: {
     //     warnings: false,
-    //     drop_console: false
+    //     drop_console: false //change to True in Production
     //   },
     //   mangle: {
     //     excrpt : ['$'],
@@ -42,6 +42,10 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
+      Router: 'app/Router.jsx',
+      Reducers: 'app/reducers/Reducers.jsx',
+      Actions: 'app/actions/Actions.jsx',
+      configureStore: 'app/store/ConfigureStore.jsx',
       Main: 'app/components/Main.jsx',
       BeerFactory: 'app/components/BeerFactory.jsx',
       Game: 'app/components/Game.jsx',

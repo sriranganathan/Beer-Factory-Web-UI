@@ -1,4 +1,5 @@
 var React = require('react');
+var {connect} = require('react-redux');
 
 var Game = React.createClass({
   render : function () {
@@ -17,4 +18,11 @@ var Game = React.createClass({
   }
 });
 
-module.exports = Game;
+module.exports = connect(
+  (state) => {
+    return {
+      user_id: state.userDetails.user_id,
+      auth_token: state.userDetails.auth_token
+    };
+  }
+)(Game);

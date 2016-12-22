@@ -1,7 +1,9 @@
 var axios = require('axios');
 var querystring = require('querystring');
 
-var request = function (API_BASE_URL, API_URL, data, method="post") {
+const API_BASE_URL = "http://localhost:8000/api/";
+
+var request = function (API_URL, data, method="post") {
 
   var config = {
     method: method,
