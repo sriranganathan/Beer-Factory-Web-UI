@@ -1,4 +1,5 @@
 var React = require('react');
+var LayoutList = require('LayoutList');
 var {connect} = require('react-redux');
 var {showMenu} = require('Actions');
 
@@ -14,12 +15,7 @@ var Game = React.createClass({
 
     return (
       <div>
-        <h1>This is the Game component This is the Game component This is the Game component</h1>
-        <p>
-          The user going to play the game is {user_id} and is validated by the
-          auth token : {auth_token}
-        </p>
-        <button className="button" onClick={this.handleClick}>Click me to toggle the Menu</button>
+        <LayoutList />
       </div>
     );
   }

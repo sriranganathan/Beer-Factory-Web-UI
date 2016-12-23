@@ -52,6 +52,8 @@ module.exports = {
       Main: 'app/components/Main.jsx',
       BeerFactory: 'app/components/BeerFactory.jsx',
       Game: 'app/components/Game.jsx',
+      LayoutList: 'app/components/LayoutList.jsx',
+      LayoutElement: 'app/components/LayoutElement.jsx',
       Login: 'app/components/Login.jsx',
       API: 'app/api/API.js',
       Instruction: 'app/components/Instruction.jsx',

@@ -2,7 +2,8 @@ var redux = require('redux');
 var thunk = require('redux-thunk').default;
 
 import {reducer as toastrReducer} from 'react-redux-toastr';
-var {UserDetailsReducer, GameDetailsReducer, MenuDetailsReducer} = require('Reducers')
+var {UserDetailsReducer, GameDetailsReducer, MenuDetailsReducer,
+     LayoutDetailsReducer} = require('Reducers')
 
 export var configure = (initialState = {}) => {
 
@@ -10,6 +11,7 @@ export var configure = (initialState = {}) => {
     userDetails: UserDetailsReducer,
     gameDetails: GameDetailsReducer,
     menuDetails: MenuDetailsReducer,
+    layoutDetails: LayoutDetailsReducer,
     toastr: toastrReducer
   });
 
