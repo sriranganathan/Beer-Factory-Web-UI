@@ -5,3 +5,15 @@ export var setUserCredentials = (user_id, auth_token) => {
     auth_token
   };
 };
+
+export var showMenu = () => {
+  return {
+      type: "SHOW_MENU",
+    };
+};
+
+export var hideMenu = () => {
+  return {
+      type: "HIDE_MENU",
+    };
+};

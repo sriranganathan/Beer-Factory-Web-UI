@@ -1,20 +1,33 @@
 var React = require('react');
 var Login = require('Login');
 var Game = require('Game');
+var SideBar = require('SideBar');
 var {connect} = require('react-redux');
 
 var BeerFactory = React.createClass({
 
-  render : function () {
+  renderContent : function () {
+
     var user_id = this.props.user_id;
     var auth_token = this.props.auth_token;
 
-    if(user_id === null) { // The user has not logged in (localStorage is empty)
+    if(user_id === null)
       return <Login />;
-    }
-    else {
+    else
       return <Game />;
-    }
+
+  },
+
+  render : function () {
+    return (
+      <div id="outer-container">
+        <SideBar />
+        <div id="page-wrap">
+          {this.renderContent()}
+        </div>
+      </div>
+    );
+
   }
 
 });

@@ -47,6 +47,8 @@ module.exports = {
       Actions: 'app/actions/Actions.jsx',
       configureStore: 'app/store/ConfigureStore.jsx',
       Toastr: 'app/components/Toastr.jsx',
+      SideBar: 'app/components/SideBar.jsx',
+      MenuStyles: 'app/styles/menu.js',
       Main: 'app/components/Main.jsx',
       BeerFactory: 'app/components/BeerFactory.jsx',
       Game: 'app/components/Game.jsx',

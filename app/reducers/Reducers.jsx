@@ -29,3 +29,26 @@ export var GameDetailsReducer = (state = {}, action) => {
   }
 
 };
+
+var defaultMenuState = {
+  isOpen: false
+};
+
+export var MenuDetailsReducer = (state = defaultMenuState, action) => {
+
+  switch (action.type) {
+    case 'SHOW_MENU':
+      return {
+        ...state,
+        isOpen: true
+      };
+    case 'HIDE_MENU':
+      return {
+        ...state,
+        isOpen: false
+      };
+      default:
+        return state;
+  }
+
+};

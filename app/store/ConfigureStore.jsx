@@ -2,13 +2,14 @@ var redux = require('redux');
 var thunk = require('redux-thunk').default;
 
 import {reducer as toastrReducer} from 'react-redux-toastr';
-var {UserDetailsReducer, GameDetailsReducer} = require('Reducers')
+var {UserDetailsReducer, GameDetailsReducer, MenuDetailsReducer} = require('Reducers')
 
 export var configure = (initialState = {}) => {
 
   var reducer = redux.combineReducers({
     userDetails: UserDetailsReducer,
     gameDetails: GameDetailsReducer,
+    menuDetails: MenuDetailsReducer,
     toastr: toastrReducer
   });
 
