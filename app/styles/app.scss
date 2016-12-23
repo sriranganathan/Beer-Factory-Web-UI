@@ -1,4 +1,5 @@
 @import "../../node_modules/foundation-sites/scss/foundation";
+@import '../../node_modules/react-redux-toastr/src/styles/index';
 
 @include foundation-flex-grid;
 @include foundation-flex-classes;

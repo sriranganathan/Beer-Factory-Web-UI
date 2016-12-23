@@ -46,6 +46,7 @@ module.exports = {
       Reducers: 'app/reducers/Reducers.jsx',
       Actions: 'app/actions/Actions.jsx',
       configureStore: 'app/store/ConfigureStore.jsx',
+      Toastr: 'app/components/Toastr.jsx',
       Main: 'app/components/Main.jsx',
       BeerFactory: 'app/components/BeerFactory.jsx',
       Game: 'app/components/Game.jsx',
