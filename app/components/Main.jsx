@@ -4,7 +4,7 @@ var Toastr = require('Toastr');
 var Main = React.createClass({
   render : function() {
     return (
-      <div>
+      <div className="container">
             {this.props.children}
             <Toastr />
       </div>

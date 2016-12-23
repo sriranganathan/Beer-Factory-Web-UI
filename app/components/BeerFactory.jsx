@@ -20,7 +20,7 @@ var BeerFactory = React.createClass({
 
   render : function () {
     return (
-      <div id="outer-container">
+      <div id="outer-container" className="container">
         <SideBar />
         <div id="page-wrap">
           {this.renderContent()}

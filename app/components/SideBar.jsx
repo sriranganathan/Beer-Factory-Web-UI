@@ -1,5 +1,5 @@
 var React = require('react');
-var Menu = require('react-burger-menu').push;
+import Menu from 'react-burger-menu/lib/menus/scaleDown'
 var MenuStyles = require('MenuStyles');
 var {connect} = require('react-redux');
 var {hideMenu} = require('Actions');
@@ -7,7 +7,6 @@ var {hideMenu} = require('Actions');
 var SideBar = React.createClass({
 
   handleStateChange : function (state) {
-      console.log('yeah');
       if(state.isOpen === false)
         this.props.dispatch(hideMenu());
   },

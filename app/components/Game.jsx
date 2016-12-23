@@ -5,7 +5,6 @@ var {showMenu} = require('Actions');
 var Game = React.createClass({
 
   handleClick : function() {
-    console.log("HI");
     this.props.dispatch(showMenu());
   },
 
