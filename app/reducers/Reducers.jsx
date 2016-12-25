@@ -1,3 +1,5 @@
+var sha1 = require('js-sha1');
+
 var user_id = localStorage.getItem('user_id');
 var auth_token = localStorage.getItem('auth_token');
 
@@ -6,15 +8,28 @@ var UserDetails = {
   auth_token
 };
 
+var updateUserStorage = (state) => {
+  if(state.user_id === null) {
+    console.login
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('auth_token');
+  } else {
+    localStorage.setItem('user_id', state.user_id);
+    localStorage.setItem('auth_token', state.auth_token);
+  }
+};
+
 export var UserDetailsReducer = (state = UserDetails, action) => {
 
   switch (action.type) {
     case 'SET_USER_CREDENTIALS':
-      return {
+      var result = {
         ...state,
         user_id: action.user_id,
         auth_token: action.auth_token
       };
+      updateUserStorage(result);
+      return result;
     default:
       return state;
   }
@@ -53,33 +68,29 @@ export var MenuDetailsReducer = (state = defaultMenuState, action) => {
 
 };
 
-var defaultLayoutState = {
-  LayoutSpaces: [
-    {
-      'space_id':1,
-      'loc_x':0,
-      'loc_y':0,
-      'width':1,
-      'length':1
-    },
-    {
-      'space_id':2,
-      'loc_x':1,
-      'loc_y':0,
-      'width':1,
-      'length':1
-    },
-    {
-      'space_id':3,
-      'loc_x':0,
-      'loc_y':1,
-      'width':2,
-      'length':1
-    }
-  ],
-  MaxXLoc: 0,
-  MaxYLoc: 0
+
+var layoutDetailsStr = localStorage.getItem(user_id + '_layoutDetails');
+var layoutDetailsHash = localStorage.getItem(user_id + '_layoutDetailsHash');
+var defaultLayoutState;
+
+if(layoutDetailsStr !== null && sha1(layoutDetailsStr) === layoutDetailsHash)
+  defaultLayoutState = JSON.parse(layoutDetailsStr);
+
+if(defaultLayoutState === undefined)
+  defaultLayoutState = {
+    LayoutSpaces: [],
+    MaxXLoc: 0,
+    MaxYLoc: 0
+  };
+
+
+var updateLayoutStorage = (state) => {
+  var layoutDetailsStr = JSON.stringify(state);
+  var layoutDetailsHash = sha1(layoutDetailsStr);
+  localStorage.setItem(user_id + '_layoutDetails', layoutDetailsStr);
+  localStorage.setItem(user_id + '_layoutDetailsHash', layoutDetailsHash);
 };
+
 
 var updateMaxLocs = (state) => {
 
@@ -91,11 +102,15 @@ var updateMaxLocs = (state) => {
     MaxYLoc = (MaxYLoc > cur_y)? MaxYLoc:cur_y;
   }
 
-  return {
+  var result = {
     ...state,
     MaxXLoc,
     MaxYLoc
   };
+
+  updateLayoutStorage(result);
+  return result;
+
 };
 
 
@@ -108,7 +123,7 @@ export var LayoutDetailsReducer = (state = defaultLayoutState, action) => {
         LayoutSpaces: action.LayoutSpaces
       });
     default:
-      return updateMaxLocs(state);
+      return state;
   }
 
 };

@@ -23,7 +23,7 @@ var LayoutElement = React.createClass({
     var space = this.props.LayoutSpaces[index];
     return (
       <div className="LayoutSpace" style={this.generateStyle(space, MaxXLoc, MaxYLoc)}>
-        <p>This space was generated for {JSON.stringify(space)}</p>
+        <p>This space was generated for {space.description}</p>
       </div>
     );
   }

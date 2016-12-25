@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html, body, #app, .container {
   height: 100%;
   width: 100%;
@@ -6,4 +10,14 @@ html, body, #app, .container {
 
 input {
   box-shadow: none !important;
+}
+
+#loader {
+  height: inherit;
+  text-align: center;
+}
+
+#main-loader {
+  height: 20vh;
+  padding-top: 40vh;
 }

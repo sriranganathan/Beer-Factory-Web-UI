@@ -16,8 +16,9 @@ var request = function (API_URL, data, method="post") {
   return axios.request(config).then(function (response) {
     if(response.data.status_code === 200) {
       return response.data.data;
-    }
-    else {
+    } else if (response.data.status_code === 401) {
+      throw new Error(401);
+    } else {
       throw new Error(response.data.data);
     }
   }, function (error) {

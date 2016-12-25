@@ -17,3 +17,10 @@ export var hideMenu = () => {
       type: "HIDE_MENU",
     };
 };
+
+export var setLayoutSpace = (LayoutSpaces) => {
+  return {
+    type: 'SET_LAYOUT_SPACES',
+    LayoutSpaces: LayoutSpaces
+  };
+}

@@ -21,8 +21,6 @@ var Login = React.createClass({
     password = password.value;
 
     var success = (data) => {
-      localStorage.setItem("user_id", data.user_id);
-      localStorage.setItem("auth_token", data.auth_token);
       var {dispatch} = this.props
       dispatch(setUserCredentials(data.user_id, data.auth_token));
     };

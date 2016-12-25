@@ -2,18 +2,9 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    // 'script!jquery/dist/jquery.min.js',
-    // 'script!foundation-sites/dist/js/foundation.min.js',
     './app/app.jsx'
   ],
-  // externals: {
-  //   jquery: 'jQuery'
-  // },
   plugins: [
-    // new webpack.ProvidePlugin({
-    //   '$': 'jquery',
-    //   'jQuery': 'jquery'
-    // })
     // Uncomment in production
     // new webpack.optimize.UglifyJsPlugin({
     //   beautify: false,
@@ -48,6 +39,7 @@ module.exports = {
       configureStore: 'app/store/ConfigureStore.jsx',
       Toastr: 'app/components/Toastr.jsx',
       SideBar: 'app/components/SideBar.jsx',
+      Loader: 'app/components/Loader.jsx',
       MenuStyles: 'app/styles/menu.js',
       Main: 'app/components/Main.jsx',
       BeerFactory: 'app/components/BeerFactory.jsx',
