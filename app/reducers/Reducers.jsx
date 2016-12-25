@@ -80,7 +80,8 @@ if(defaultLayoutState === undefined)
   defaultLayoutState = {
     LayoutSpaces: [],
     MaxXLoc: 0,
-    MaxYLoc: 0
+    MaxYLoc: 0,
+    CurrentIndex: null
   };
 
 
@@ -89,6 +90,7 @@ var updateLayoutStorage = (state) => {
   var layoutDetailsHash = sha1(layoutDetailsStr);
   localStorage.setItem(user_id + '_layoutDetails', layoutDetailsStr);
   localStorage.setItem(user_id + '_layoutDetailsHash', layoutDetailsHash);
+  return state;
 };
 
 
@@ -108,8 +110,7 @@ var updateMaxLocs = (state) => {
     MaxYLoc
   };
 
-  updateLayoutStorage(result);
-  return result;
+  return updateLayoutStorage(result);
 
 };
 
@@ -121,6 +122,11 @@ export var LayoutDetailsReducer = (state = defaultLayoutState, action) => {
       return updateMaxLocs({
         ...state,
         LayoutSpaces: action.LayoutSpaces
+      });
+    case 'SET_CURRENT_INDEX':
+      return updateLayoutStorage({
+        ...state,
+        CurrentIndex: action.CurrentIndex
       });
     default:
       return state;

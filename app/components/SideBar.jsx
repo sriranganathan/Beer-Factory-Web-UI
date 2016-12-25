@@ -1,8 +1,9 @@
 var React = require('react');
-import Menu from 'react-burger-menu/lib/menus/scaleDown'
+import Menu from 'react-burger-menu/lib/menus/slide'
 var MenuStyles = require('MenuStyles');
 var {connect} = require('react-redux');
 var {hideMenu} = require('Actions');
+var MenuElement = require('MenuElement');
 
 var SideBar = React.createClass({
 
@@ -23,7 +24,7 @@ var SideBar = React.createClass({
         outerContainerId={"outer-container"}
         onStateChange={this.handleStateChange}>
 
-        <p>We can use this for displaying details when user clicks a space</p>
+        <MenuElement />
 
       </Menu>
     );

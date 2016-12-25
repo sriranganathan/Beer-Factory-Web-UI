@@ -1,4 +1,11 @@
 .LayoutSpace {
   position:absolute;
-  border: 1px solid black;
+  background-color: lightblue;
+}
+
+.LayoutSpace:hover {
+  filter: brightness(85%);
+  -webkit-filter: brightness(85%);
+  -moz-filter: brightness(85%);
+  cursor: pointer;
 }

@@ -39,6 +39,7 @@ module.exports = {
       configureStore: 'app/store/ConfigureStore.jsx',
       Toastr: 'app/components/Toastr.jsx',
       SideBar: 'app/components/SideBar.jsx',
+      MenuElement: 'app/components/MenuElement.jsx',
       Loader: 'app/components/Loader.jsx',
       MenuStyles: 'app/styles/menu.js',
       Main: 'app/components/Main.jsx',

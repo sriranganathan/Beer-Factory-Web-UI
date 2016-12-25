@@ -24,3 +24,10 @@ export var setLayoutSpace = (LayoutSpaces) => {
     LayoutSpaces: LayoutSpaces
   };
 }
+
+export var setCurrentIndex = (CurrentIndex) => {
+  return {
+    type: 'SET_CURRENT_INDEX',
+    CurrentIndex
+  };
+}

@@ -1,5 +1,6 @@
 var React = require('react');
 var {connect} = require('react-redux');
+var {showMenu, setCurrentIndex} = require('Actions');
 
 var LayoutElement = React.createClass({
 
@@ -18,11 +19,17 @@ var LayoutElement = React.createClass({
     };
   },
 
+  handleClick: function (e) {
+    var {dispatch, index} = this.props;
+    dispatch(setCurrentIndex(index));
+    dispatch(showMenu());
+  },
+
   render: function () {
     var {MaxXLoc, MaxYLoc, index} = this.props;
     var space = this.props.LayoutSpaces[index];
     return (
-      <div className="LayoutSpace" style={this.generateStyle(space, MaxXLoc, MaxYLoc)}>
+      <div className="LayoutSpace" onClick={this.handleClick} style={this.generateStyle(space, MaxXLoc, MaxYLoc)}>
         <p>This space was generated for {space.description}</p>
       </div>
     );
