@@ -86,11 +86,19 @@ if(defaultLayoutState === undefined)
 
 
 var updateLayoutStorage = (state) => {
-  var layoutDetailsStr = JSON.stringify(state);
-  var layoutDetailsHash = sha1(layoutDetailsStr);
-  localStorage.setItem(user_id + '_layoutDetails', layoutDetailsStr);
-  localStorage.setItem(user_id + '_layoutDetailsHash', layoutDetailsHash);
+
+  if(state.LayoutSpaces.length === 0) {
+    localStorage.removeItem('layoutDetails');
+    localStorage.removeItem('layoutDetailsHash');
+  } else {
+    var layoutDetailsStr = JSON.stringify(state);
+    var layoutDetailsHash = sha1(layoutDetailsStr);
+    localStorage.setItem('layoutDetails', layoutDetailsStr);
+    localStorage.setItem('layoutDetailsHash', layoutDetailsHash);
+  }
+
   return state;
+
 };
 
 

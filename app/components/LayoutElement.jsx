@@ -4,6 +4,14 @@ var {showMenu, setCurrentIndex} = require('Actions');
 
 var LayoutElement = React.createClass({
 
+  generateClass: function(space) {
+    var basic_classes = "LayoutSpace";
+    if (space.activation_hr < 10) 
+      return basic_classes + " LayoutSpace-active";
+    else 
+      return basic_classes + " LayoutSpace-locked";
+  },
+
   generateStyle: function(space, MaxXLoc, MaxYLoc) {
 
     var left = (space.loc_x/MaxXLoc)*100 + "%";
@@ -29,7 +37,7 @@ var LayoutElement = React.createClass({
     var {MaxXLoc, MaxYLoc, index} = this.props;
     var space = this.props.LayoutSpaces[index];
     return (
-      <div className="LayoutSpace" onClick={this.handleClick} style={this.generateStyle(space, MaxXLoc, MaxYLoc)}>
+      <div className={this.generateClass(space)} onClick={this.handleClick} style={this.generateStyle(space, MaxXLoc, MaxYLoc)}>
         <p>This space was generated for {space.description}</p>
       </div>
     );

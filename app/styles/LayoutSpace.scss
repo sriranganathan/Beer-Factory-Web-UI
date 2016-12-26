@@ -1,11 +1,20 @@
+$brightness: 90%;
+
 .LayoutSpace {
   position:absolute;
+}
+
+.LayoutSpace-active {
   background-color: lightblue;
 }
 
+.LayoutSpace-locked {
+    background-color: lightgray;
+}
+
 .LayoutSpace:hover {
-  filter: brightness(85%);
-  -webkit-filter: brightness(85%);
-  -moz-filter: brightness(85%);
+  filter: brightness($brightness);
+  -webkit-filter: brightness($brightness);
+  -moz-filter: brightness($brightness);
   cursor: pointer;
 }

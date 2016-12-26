@@ -48,6 +48,7 @@ module.exports = {
       LayoutList: 'app/components/LayoutList.jsx',
       LayoutElement: 'app/components/LayoutElement.jsx',
       Login: 'app/components/Login.jsx',
+      Reset: 'app/components/Reset.jsx',
       API: 'app/api/API.js',
       Instruction: 'app/components/Instruction.jsx',
       applicationStyles: 'app/styles/app.scss'
