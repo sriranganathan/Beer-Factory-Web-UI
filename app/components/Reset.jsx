@@ -9,6 +9,8 @@ var Reset = React.createClass({
         var {dispatch} = this.props;
         dispatch(setLayoutSpace([]));
         dispatch(setUserCredentials(null, null));
+        localStorage.removeItem('gameDetails');
+        localStorage.removeItem('gameDetailsHash');
     },
 
     render: function () {

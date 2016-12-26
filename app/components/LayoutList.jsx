@@ -3,7 +3,7 @@ var {connect} = require('react-redux');
 var LayoutElement = require('LayoutElement');
 var Loader = require('Loader');
 var API = require('API');
-var {setUserCredentials, setLayoutSpace} = require('Actions');
+var {setUserCredentials, setLayoutSpace, setUserHr, setGameState} = require('Actions');
 var {toastr} = require('react-redux-toastr');
 
 var LayoutList = React.createClass({
@@ -12,7 +12,14 @@ var LayoutList = React.createClass({
 
     var success = (data) => {
       var {dispatch} = this.props;
+      dispatch(setUserHr(data.user.hr));
       dispatch(setLayoutSpace(data.layout_spaces));
+      dispatch(setGameState({
+        actions: data.actions,
+        advertisements: data.advertisements,
+        costTypes: data.cost_types,
+        upgrades: data.upgrades
+      }));
     };
 
     var failure = (error) => {
@@ -46,7 +53,7 @@ var LayoutList = React.createClass({
   },
 
   render: function () {
-    if(this.props.LayoutSpaces.length === 0) {
+    if(!this.props.isGameStateSet) {
       this.fetchLayoutSpaces();
       return (
         <div id="main-loader">
@@ -69,7 +76,8 @@ module.exports = connect(
     return {
       LayoutSpaces: state.layoutDetails.LayoutSpaces,
       user_id: state.userDetails.user_id,
-      auth_token: state.userDetails.auth_token
+      auth_token: state.userDetails.auth_token,
+      isGameStateSet: (state.layoutDetails.LayoutSpaces.length !== 0 && state.gameDetails !== null)
     };
   }
 )(LayoutList);

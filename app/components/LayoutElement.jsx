@@ -6,7 +6,7 @@ var LayoutElement = React.createClass({
 
   generateClass: function(space) {
     var basic_classes = "LayoutSpace";
-    if (space.activation_hr < 10) 
+    if (space.activation_hr <= this.props.hr) 
       return basic_classes + " LayoutSpace-active";
     else 
       return basic_classes + " LayoutSpace-locked";
@@ -50,7 +50,8 @@ module.exports = connect(
     return {
       LayoutSpaces: state.layoutDetails.LayoutSpaces,
       MaxXLoc: state.layoutDetails.MaxXLoc,
-      MaxYLoc: state.layoutDetails.MaxYLoc
+      MaxYLoc: state.layoutDetails.MaxYLoc,
+      hr: state.userDetails.hr
     };
   }
 )(LayoutElement);

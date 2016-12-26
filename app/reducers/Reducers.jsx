@@ -2,43 +2,75 @@ var sha1 = require('js-sha1');
 
 var user_id = localStorage.getItem('user_id');
 var auth_token = localStorage.getItem('auth_token');
+var hr = localStorage.getItem('hr');
 
 var UserDetails = {
   user_id,
-  auth_token
+  auth_token,
+  hr
 };
 
 var updateUserStorage = (state) => {
   if(state.user_id === null) {
-    console.login
     localStorage.removeItem('user_id');
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('hr');
   } else {
     localStorage.setItem('user_id', state.user_id);
     localStorage.setItem('auth_token', state.auth_token);
+    localStorage.setItem('hr', state.hr);
   }
+  return state;
 };
 
 export var UserDetailsReducer = (state = UserDetails, action) => {
 
   switch (action.type) {
     case 'SET_USER_CREDENTIALS':
-      var result = {
+      return updateUserStorage({
         ...state,
         user_id: action.user_id,
         auth_token: action.auth_token
-      };
-      updateUserStorage(result);
-      return result;
+      });
+    case 'SET_USER_HR':
+      return updateUserStorage({
+        ...state,
+        hr: action.hr
+      });
     default:
       return state;
   }
 
 };
 
-export var GameDetailsReducer = (state = {}, action) => {
+var gameDetailsStr = localStorage.getItem('gameDetails');
+var gameDetailsHash = localStorage.getItem('gameDetailsHash');
+var defaultGameState;
 
+if(gameDetailsStr !== null && sha1(gameDetailsStr) === gameDetailsHash)
+  defaultGameState = JSON.parse(gameDetailsStr);
+
+if(defaultGameState === undefined)
+  defaultGameState = null
+
+var updateGameStorage = (state) => {
+
+  var gameDetailsStr = JSON.stringify(state);
+  var gameDetailsHash = sha1(gameDetailsStr);
+  localStorage.setItem('gameDetails', gameDetailsStr);
+  localStorage.setItem('gameDetailsHash', gameDetailsHash);
+
+  return state;
+};
+
+export var GameDetailsReducer = (state = defaultGameState, action) => {
   switch (action.type) {
+    case 'SET_GAME_STATE':
+      var {type, ...rest} = action;
+      return updateGameStorage({
+        ...state,
+        ...rest
+      });
     default:
       return state;
   }
@@ -69,8 +101,8 @@ export var MenuDetailsReducer = (state = defaultMenuState, action) => {
 };
 
 
-var layoutDetailsStr = localStorage.getItem(user_id + '_layoutDetails');
-var layoutDetailsHash = localStorage.getItem(user_id + '_layoutDetailsHash');
+var layoutDetailsStr = localStorage.getItem('layoutDetails');
+var layoutDetailsHash = localStorage.getItem('layoutDetailsHash');
 var defaultLayoutState;
 
 if(layoutDetailsStr !== null && sha1(layoutDetailsStr) === layoutDetailsHash)
