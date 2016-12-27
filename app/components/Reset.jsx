@@ -1,20 +1,16 @@
 var React = require('react');
 var {connect} = require('react-redux');
-var {setUserCredentials, setLayoutSpace} = require('Actions');
 var {toastr} = require('react-redux-toastr');
+var {initiateReset} = require('helpers');
 
 var Reset = React.createClass({
 
-    initiateReset: function () {
-        var {dispatch} = this.props;
-        dispatch(setLayoutSpace([]));
-        dispatch(setUserCredentials(null, null));
-        localStorage.removeItem('gameDetails');
-        localStorage.removeItem('gameDetailsHash');
+
+    componentDidMount: function () {
+        initiateReset(this.props.dispatch);
     },
 
     render: function () {
-        this.initiateReset();
         return (
             <h1>Check leader-board</h1>
         );

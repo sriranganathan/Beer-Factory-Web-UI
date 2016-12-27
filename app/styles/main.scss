@@ -21,3 +21,14 @@ input {
   height: 20vh;
   padding-top: 40vh;
 }
+
+#background-loader {
+    position:absolute;
+    z-index: 1;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 20vh;
+    padding-top:40vh;
+    padding-bottom:60vh;
+    width: 100%;
+}

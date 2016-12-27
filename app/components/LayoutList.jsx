@@ -4,7 +4,9 @@ var LayoutElement = require('LayoutElement');
 var Loader = require('Loader');
 var API = require('API');
 var {setUserCredentials, setLayoutSpace, setUserHr, setGameState} = require('Actions');
+var {initiateReset} = require('helpers');
 var {toastr} = require('react-redux-toastr');
+var advanceTurn = require('advanceTurn');
 
 var LayoutList = React.createClass({
 
@@ -25,8 +27,7 @@ var LayoutList = React.createClass({
     var failure = (error) => {
       var msg = error.message;
       if(msg === '401') {
-        var {dispatch} = this.props;
-        dispatch(setUserCredentials(null, null));
+        initiateReset(this.props.dispatch);
         toastr.error('Invalid Credentials', 'Please Login Again');
       } else {
         toastr.error('Error', msg);
@@ -53,9 +54,29 @@ var LayoutList = React.createClass({
   },
 
   componentDidMount: function () {
+
     if(!this.props.isGameStateSet) {
       this.fetchLayoutSpaces();
     }
+
+    var {user_id, auth_token, dispatch} = this.props;
+    var data = {
+      user_id,
+      auth_token
+    };
+    advanceTurn(data, dispatch);
+
+  },
+
+  generateBackgroundLoader: function () {
+    if(this.props.isLoading) {
+      return (
+        <div id="background-loader">
+          <Loader />
+        </div>
+      );
+    }
+    return false;
   },
 
   render: function () {
@@ -68,7 +89,10 @@ var LayoutList = React.createClass({
     }else {
       return (
         <div>
-          {this.generateList()}
+          <div id="layout-container">
+            {this.generateList()}
+          </div>
+          {this.generateBackgroundLoader()}
         </div>
       );
     }
@@ -82,7 +106,8 @@ module.exports = connect(
       LayoutSpaces: state.layoutDetails.LayoutSpaces,
       user_id: state.userDetails.user_id,
       auth_token: state.userDetails.auth_token,
-      isGameStateSet: (state.layoutDetails.LayoutSpaces.length !== 0 && state.gameDetails !== null)
+      isGameStateSet: (state.layoutDetails.LayoutSpaces.length !== 0 && state.gameDetails !== null),
+      isLoading: state.misc.isLoading
     };
   }
 )(LayoutList);

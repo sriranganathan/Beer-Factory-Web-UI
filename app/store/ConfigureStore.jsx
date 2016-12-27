@@ -3,7 +3,9 @@ var thunk = require('redux-thunk').default;
 
 import {reducer as toastrReducer} from 'react-redux-toastr';
 var {UserDetailsReducer, GameDetailsReducer, MenuDetailsReducer,
-     LayoutDetailsReducer} = require('Reducers')
+     LayoutDetailsReducer, MiscReducer, FactoryReducer, WarehousesReducer,
+     OpponentWarehousesReducer, DemandsReducer, EventsReducer,
+     NotificationsReducer, PopularityReducer} = require('Reducers')
 
 export var configure = (initialState = {}) => {
 
@@ -12,6 +14,14 @@ export var configure = (initialState = {}) => {
     gameDetails: GameDetailsReducer,
     menuDetails: MenuDetailsReducer,
     layoutDetails: LayoutDetailsReducer,
+    factory: FactoryReducer,
+    warehouses: WarehousesReducer,
+    opponentWarehouses: OpponentWarehousesReducer,
+    demands: DemandsReducer,
+    events: EventsReducer,
+    notifications: NotificationsReducer,
+    popularity: PopularityReducer,
+    misc: MiscReducer,
     toastr: toastrReducer
   });
 

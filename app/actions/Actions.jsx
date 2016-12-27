@@ -45,3 +45,64 @@ export var setGameState = (gameState) => {
     ...gameState
   };
 };
+
+export var showLoading = () => {
+  return {
+    type: 'SHOW_LOADING',
+  };
+};
+
+export var hideLoading = () => {
+  return {
+    type: 'HIDE_LOADING',
+  };
+};
+
+export var setFactory = (factory) => {
+  return {
+    type: 'SET_FACTORY',
+    ...factory
+  }
+};
+
+export var setWarehouses = (warehouses) => {
+  return {
+    type: 'SET_WAREHOUSES',
+    warehouses
+  }
+};
+
+export var setOpponentWarehouses = (warehouses) => {
+  return {
+    type: 'SET_OPPONENT_WAREHOUSES',
+    warehouses
+  }
+};
+
+export var setDemands = (demands) => {
+  return {
+    type: 'SET_DEMANDS',
+    demands
+  }
+};
+
+export var setEvents = (events) => {
+  return {
+    type: 'SET_EVENTS',
+    events
+  }
+};
+
+export var setNotifications = (notifications) => {
+  return {
+    type: 'SET_NOTIFICATIONS',
+    notifications
+  }
+};
+
+export var setPopularity = (popularity) => {
+  return {
+    type: 'SET_POPULARITY',
+    popularity
+  }
+};

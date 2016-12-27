@@ -173,3 +173,107 @@ export var LayoutDetailsReducer = (state = defaultLayoutState, action) => {
   }
 
 };
+
+var defaultMiscState = {
+  isLoading: true
+};
+
+export var MiscReducer = (state = defaultMiscState, action) => {
+
+  switch (action.type) {
+    case 'SHOW_LOADING':
+      return {
+        ...state,
+        isLoading: true
+      };
+    case 'HIDE_LOADING':
+      return {
+        ...state,
+        isLoading: false
+      };
+    default:
+      return state;
+  }
+
+};
+
+export var FactoryReducer = (state = {}, action) => {
+
+  switch (action.type) {
+    case 'SET_FACTORY':
+      var {type, ...rest} = action;
+      return {
+        ...state,
+        ...rest
+      };
+    default:
+      return state;
+  }
+
+};
+
+export var WarehousesReducer = (state = [], action) => {
+
+  switch (action.type) {
+    case 'SET_WAREHOUSES':
+      return action.warehouses;
+    default:
+      return state;
+  }
+
+};
+
+export var OpponentWarehousesReducer = (state = [], action) => {
+
+  switch (action.type) {
+    case 'SET_OPPONENT_WAREHOUSES':
+      return action.warehouses;
+    default:
+      return state;
+  }
+
+};
+
+export var DemandsReducer = (state = [], action) => {
+
+  switch (action.type) {
+    case 'SET_DEMANDS':
+      return action.demands;
+    default:
+      return state;
+  }
+
+};
+
+export var EventsReducer = (state = [], action) => {
+
+  switch (action.type) {
+    case 'SET_EVENTS':
+      return action.events;
+    default:
+      return state;
+  }
+
+};
+
+export var PopularityReducer = (state = {}, action) => {
+
+  switch (action.type) {
+    case 'SET_POPULARITY':
+      return action.popularity
+    default:
+      return state
+  }
+
+};
+
+export var NotificationsReducer = (state = [], action) => {
+
+  switch (action.type) {
+    case 'SET_NOTIFICATIONS':
+      return action.notifications
+    default:
+      return state
+  }
+
+};
