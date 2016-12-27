@@ -52,9 +52,14 @@ var LayoutList = React.createClass({
 
   },
 
-  render: function () {
+  componentDidMount: function () {
     if(!this.props.isGameStateSet) {
       this.fetchLayoutSpaces();
+    }
+  },
+
+  render: function () {
+    if(!this.props.isGameStateSet) {
       return (
         <div id="main-loader">
           <Loader />
