@@ -27,6 +27,14 @@ var LayoutElement = React.createClass({
     };
   },
 
+  generateContent: function (space) {
+    if(this.props.warehouses[space.space_id])
+      return 'Warehouse';
+    else if(this.props.opponentWarehouses[space.space_id])
+      return 'Opponent Warehouse';
+    return space.description;
+  },
+
   handleClick: function (e) {
     var {dispatch, index} = this.props;
     dispatch(setCurrentIndex(index));
@@ -38,7 +46,7 @@ var LayoutElement = React.createClass({
     var space = this.props.LayoutSpaces[index];
     return (
       <div className={this.generateClass(space)} onClick={this.handleClick} style={this.generateStyle(space, MaxXLoc, MaxYLoc)}>
-        <p>This space was generated for {space.description}</p>
+        <p>{this.generateContent(space)}</p>
       </div>
     );
   }
@@ -51,7 +59,9 @@ module.exports = connect(
       LayoutSpaces: state.layoutDetails.LayoutSpaces,
       MaxXLoc: state.layoutDetails.MaxXLoc,
       MaxYLoc: state.layoutDetails.MaxYLoc,
-      hr: state.userDetails.hr
+      hr: state.userDetails.hr,
+      warehouses: state.warehouses,
+      opponentWarehouses: state.opponentWarehouses
     };
   }
 )(LayoutElement);

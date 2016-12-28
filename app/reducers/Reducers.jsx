@@ -212,7 +212,7 @@ export var FactoryReducer = (state = {}, action) => {
 
 };
 
-export var WarehousesReducer = (state = [], action) => {
+export var WarehousesReducer = (state = {}, action) => {
 
   switch (action.type) {
     case 'SET_WAREHOUSES':
@@ -223,7 +223,7 @@ export var WarehousesReducer = (state = [], action) => {
 
 };
 
-export var OpponentWarehousesReducer = (state = [], action) => {
+export var OpponentWarehousesReducer = (state = {}, action) => {
 
   switch (action.type) {
     case 'SET_OPPONENT_WAREHOUSES':

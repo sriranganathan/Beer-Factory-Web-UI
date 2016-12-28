@@ -6,3 +6,15 @@ export var initiateReset = function (dispatch) {
     localStorage.removeItem('gameDetails');
     localStorage.removeItem('gameDetailsHash');
 };
+
+export var transformWarehouses = (warehouses) => {
+
+    var result = {};
+
+    var transformation = (warehouse) => {
+        result[warehouse.space_id] = warehouse;
+    };
+    warehouses.forEach(transformation);
+
+    return result; 
+};
