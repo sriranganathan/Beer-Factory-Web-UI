@@ -234,7 +234,7 @@ export var OpponentWarehousesReducer = (state = {}, action) => {
 
 };
 
-export var DemandsReducer = (state = [], action) => {
+export var DemandsReducer = (state = {}, action) => {
 
   switch (action.type) {
     case 'SET_DEMANDS':

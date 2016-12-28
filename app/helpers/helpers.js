@@ -18,3 +18,22 @@ export var transformWarehouses = (warehouses) => {
 
     return result; 
 };
+
+export var transformDemands = (demands) => {
+
+    var result = {};
+
+    var transformation = (demand) => {
+        var space_id = demand.space_id;
+        
+        if(result[space_id] === undefined)
+            result[space_id] = []
+
+        result[space_id].push(demand)
+
+    };
+
+    demands.forEach(transformation);
+
+    return result;
+}

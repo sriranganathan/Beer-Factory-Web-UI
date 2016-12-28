@@ -1,5 +1,6 @@
 var API = require('API');
-var {initiateReset, transformWarehouses} = require('helpers');
+var {initiateReset, transformWarehouses,
+      transformDemands} = require('helpers');
 var {showLoading, hideLoading, setFactory, setWarehouses,
       setOpponentWarehouses, setDemands, setEvents,
       setNotifications, setPopularity, setUserHr} = require('Actions');
@@ -16,7 +17,7 @@ var advanceTurn = (params, dispatch) => {
         transformWarehouses(data.opponent_warehouses)
       ));
 
-      dispatch(setDemands(data.demands));
+      dispatch(setDemands(transformDemands(data.demands)));
       dispatch(setEvents(data.events));
       dispatch(setNotifications(data.notifications));
       dispatch(setPopularity(data.popularity));
