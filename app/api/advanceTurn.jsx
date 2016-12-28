@@ -3,6 +3,7 @@ var {initiateReset} = require('helpers');
 var {showLoading, hideLoading, setFactory, setWarehouses,
       setOpponentWarehouses, setDemands, setEvents,
       setNotifications, setPopularity, setUserHr} = require('Actions');
+var {toastr} = require('react-redux-toastr');
 
 var advanceTurn = (params, dispatch) => {
 
