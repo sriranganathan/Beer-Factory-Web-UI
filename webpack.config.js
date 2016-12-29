@@ -39,6 +39,7 @@ module.exports = {
       applicationStyles: 'app/styles/app.scss',
       BeerFactory: 'app/components/BeerFactory.jsx',
       configureStore: 'app/store/ConfigureStore.jsx',
+      Demand: 'app/components/MenuComponents/Demand.jsx',
       Game: 'app/components/Game.jsx',
       helpers: 'app/helpers/helpers.js',
       Instruction: 'app/components/Instruction.jsx',
@@ -51,9 +52,11 @@ module.exports = {
       MenuStyles: 'app/styles/menu.js',
       Reducers: 'app/reducers/Reducers.jsx',
       Reset: 'app/components/Reset.jsx',
+      Retailer: 'app/components/MenuComponents/Retailer.jsx',
       Router: 'app/Router.jsx',
       SideBar: 'app/components/SideBar.jsx',
-      Toastr: 'app/components/Toastr.jsx'
+      Toastr: 'app/components/Toastr.jsx',
+      UserFactory: 'app/components/MenuComponents/UserFactory.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
