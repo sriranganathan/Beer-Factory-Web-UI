@@ -3,15 +3,20 @@ var {connect} = require('react-redux');
 var UserFactory = require('UserFactory');
 var Retailer = require('Retailer');
 var {Row} = require('react-foundation');
+var Inactive = require('Inactive');
+var {convertHrtoDays} = require('helpers');
 
 var MenuElement = React.createClass({
 
   generateContent: function() {
 
-    var {index, space} = this.props;
+    var {index, space, hr} = this.props;
     
     if (space === undefined)
       return false;
+
+    if(space.activation_hr > hr)
+      return <Inactive desc={space.description} activation_hr={space.activation_hr}/>
 
     switch(space.description) {
       case 'USER FACTORY':
@@ -27,11 +32,12 @@ var MenuElement = React.createClass({
 
   generateFooter: function () {
     var {factory, hr} = this.props;
+    var {day, hr} = convertHrtoDays(hr);
     return (
       <div id="menu-footer">
         <Row>Available Money - ₹ {factory.money}</Row>
         <Row>Score - {factory.user_score}</Row>
-        <Row>Day - {Math.floor(hr/25) + 1}, Hr - {hr%25}</Row>
+        <Row>Day - {day}, Hr - {hr}</Row>
       </div>
     );
   },

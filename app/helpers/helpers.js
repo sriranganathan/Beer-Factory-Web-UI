@@ -36,4 +36,16 @@ export var transformDemands = (demands) => {
     demands.forEach(transformation);
 
     return result;
+};
+
+export var convertHrtoDays = (hr) => {
+
+    var day = Math.floor(hr/24) + 1;
+    var hr = hr % 24;
+
+    return {
+        day,
+        hr
+    };
+
 }

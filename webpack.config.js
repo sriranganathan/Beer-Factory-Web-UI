@@ -42,6 +42,7 @@ module.exports = {
       Demand: 'app/components/MenuComponents/Demand.jsx',
       Game: 'app/components/Game.jsx',
       helpers: 'app/helpers/helpers.js',
+      Inactive: 'app/components/MenuComponents/Inactive.jsx',
       Instruction: 'app/components/Instruction.jsx',
       LayoutElement: 'app/components/LayoutElement.jsx',
       LayoutList: 'app/components/LayoutList.jsx',
