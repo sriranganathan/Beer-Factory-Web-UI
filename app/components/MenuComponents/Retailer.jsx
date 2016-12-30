@@ -24,7 +24,7 @@ var UserFactory = React.createClass({
                 <center><h3>Retailer</h3></center>
                 <center><h5>DEMANDS</h5></center>
                 <hr />
-                <div id="demands-list">
+                <div id="scrollable">
                     {this.generateDemandsList()}
                 </div>
             </div>

@@ -7,7 +7,7 @@
     bottom: 0;
 }
 
-#demands-list {
+#scrollable {
     position: relative;
     height:50vh;
     overflow-y: auto;
@@ -15,23 +15,23 @@
     padding: 5px;
 }
 
-#demands-list::-webkit-scrollbar{
+#scrollable::-webkit-scrollbar{
     width:0.5em;
     background-color:#373A47;
     border-radius:10px;
 } 
 
-#demands-list::-webkit-scrollbar-thumb{
+#scrollable::-webkit-scrollbar-thumb{
     background-color:#6F7073;
     border-radius:10px;
 }
 
-#demands-list::-webkit-scrollbar-thumb:hover{
+#scrollable::-webkit-scrollbar-thumb:hover{
     background-color:#6F7073;
     border:1px solid #373A47;
 }
 
-#demands-list::-webkit-scrollbar-thumb:active{
+#scrollable::-webkit-scrollbar-thumb:active{
     background-color:#6F7073;
     border:1px solid #373A47;
 }
@@ -39,4 +39,8 @@
 .demand {
     border-radius: 10px;
     border-color: rgba(0, 0, 0, 0);   
+}
+
+.minified p {
+    margin-bottom: 0px;
 }
