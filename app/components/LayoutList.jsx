@@ -7,7 +7,7 @@ var {setUserCredentials, setLayoutSpace, setUserHr, setGameState} = require('Act
 var {initiateReset} = require('helpers');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
-
+var {transformCostTypes} = require('helpers');
 var LayoutList = React.createClass({
 
   fetchLayoutSpaces: function () {
@@ -19,7 +19,7 @@ var LayoutList = React.createClass({
       dispatch(setGameState({
         actions: data.actions,
         advertisements: data.advertisements,
-        costTypes: data.cost_types,
+        costTypes: transformCostTypes(data.cost_types),
         upgrades: data.upgrades
       }));
     };

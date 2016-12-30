@@ -48,4 +48,17 @@ export var convertHrtoDays = (hr) => {
         hr
     };
 
-}
+};
+
+export var transformCostTypes = (costTypes) => {
+    console.log("hi");
+    var result = {};
+
+    var transformation = (costType) => {
+        result[costType.cost_code] = costType
+    };
+    
+    costTypes.forEach(transformation);
+    return result;
+
+};
