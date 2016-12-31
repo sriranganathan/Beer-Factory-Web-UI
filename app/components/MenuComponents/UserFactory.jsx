@@ -1,6 +1,7 @@
 var React = require('react');
 var {connect} = require('react-redux');
 var Order = require('Order');
+var Upgrade = require('Upgrade');
 var {Button, ButtonGroup, Link, Colors, Sizes} = require('react-foundation');
 
 var UserFactory = React.createClass({
@@ -22,6 +23,8 @@ var UserFactory = React.createClass({
         switch (this.state.current) {
             case 'order':
                 return <Order />;
+            case 'upgrade':
+                return <Upgrade />;
             default:
                 return <div>Coming Soon...</div>;
         }

@@ -73,3 +73,16 @@ export var transformActions = (actions) => {
     return result;
 
 };
+
+export var transformUpgrades = (upgrades) => {
+
+    var result = {};
+
+    var transformation = (upgrade) => {
+        result[upgrade.level] = upgrade
+    };
+    
+    upgrades.forEach(transformation);
+    return result;
+
+};
