@@ -4,7 +4,7 @@ var {Row, Column} = require('react-foundation');
 var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
-var {initiateReset} = require('helpers');
+var {initiateReset, convertHrtoDays} = require('helpers');
 var {showLoading, hideLoading} = require('Actions');
 
 var Order = React.createClass({
@@ -90,19 +90,23 @@ var Order = React.createClass({
     },
 
     render: function () {
-        var {factory, costTypes} = this.props;
+        var {factory, costTypes, currentHr, actions} = this.props;
+        var requiredHrs = actions.FACTORY_ORDER_ACTION.req_hr;
+        var {day, hr} = convertHrtoDays(currentHr + requiredHrs);
         return (
             <div className="minified">
                 <p>Total Capacity : {factory.capacity}</p>
                 <p>Used : {factory.used}</p>
                 <p>Available : {factory.capacity-factory.used}</p>
                 <p>Cost of 1 Beer : ₹ {costTypes.BEER_COST.unit_cost}</p>
+                <p>Delivery : Day {day}, Hr {hr}</p>
+                <br />
                 <form onSubmit={this.handleSubmit}>
                     <input type="number" ref="qty" placeholder="Enter Qty" onChange={this.getOrderAmt} required/>
                     <input type="submit" className="button success expanded" ref="submit" value="Order"/>
                 </form>
-                <p ref="info_msg"></p>
-                <p className="login__err-msg" ref="err_msg"></p>
+                <p ref="info_msg" className="menu-messages"></p>
+                <p className="login__err-msg menu-messages" ref="err_msg"></p>
             </div>
         );
     }
@@ -115,7 +119,9 @@ module.exports = connect(
             user_id: state.userDetails.user_id,
             auth_token: state.userDetails.auth_token,
             factory: state.factory,
-            costTypes: state.gameDetails.costTypes
+            costTypes: state.gameDetails.costTypes,
+            actions: state.gameDetails.actions,
+            currentHr: state.userDetails.hr
         }
     }
 )(Order);
