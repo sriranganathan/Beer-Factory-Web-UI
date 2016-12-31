@@ -61,3 +61,15 @@
     text-align: center;
     color: white;
 }
+
+#skip-turn {
+    background-color: #3adb76;
+    color: black;
+    font-size: 1rem;
+    padding: 8px;
+}
+
+#skip-turn:hover {
+    background-color: #22bb5b;
+    cursor: pointer;    
+}
