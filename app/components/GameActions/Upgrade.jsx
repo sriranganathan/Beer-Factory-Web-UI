@@ -5,7 +5,7 @@ var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {initiateReset, convertHrtoDays} = require('helpers');
-var {showLoading, hideLoading} = require('Actions');
+var {showLoading, hideLoading, setUpgradeProgress} = require('Actions');
 
 var Order = React.createClass({
 
@@ -16,8 +16,14 @@ var Order = React.createClass({
 
         this.refs.err_msg.innerHTML = "";
     
-        var {factory, upgrades} = this.props;
+        var {factory, upgrades, currentHr, progress} = this.props;
         var upgrade = upgrades[factory.level + 1];
+
+        //check whether an upgrade is already in progress
+        if(progress !== null && progress > currentHr) {
+            this.refs.err_msg.innerHTML = `Upgrade Already in Progress`;
+            return false;  
+        }
 
         // check whether upgrade exists
         if(upgrade === undefined) {
@@ -40,6 +46,10 @@ var Order = React.createClass({
         };
 
         var success = (data) => {
+            var {actions} = this.props;
+            var req_hr = actions.UPGRADE_ACTION.req_hr
+            dispatch(setUpgradeProgress(req_hr + currentHr))
+
             advanceTurn({user_id, auth_token}, dispatch);
             toastr.success('Success', 'Upgradtion Started');
         }
@@ -76,11 +86,18 @@ var Order = React.createClass({
     },
 
     render: function () {
-        var {factory, upgrades, currentHr, actions} = this.props;
+        var {factory, upgrades, currentHr, actions, progress} = this.props;
         var requiredHrs = actions.UPGRADE_ACTION.req_hr;
         var {day, hr} = convertHrtoDays(currentHr + requiredHrs);
         var upgrade = upgrades[factory.level + 1];
-        if(upgrades === undefined) {
+        if (progress !== null && progress > currentHr) {
+            return (
+                <div className="minified">
+                    <p>Upgradation in Progress</p>
+                </div>
+            );
+        }
+        if(upgrade === undefined) {
             return (
                 <div className="minified">
                     <p>No more Upgrades</p>
@@ -109,7 +126,8 @@ module.exports = connect(
             factory: state.factory,
             upgrades: state.gameDetails.upgrades,
             actions: state.gameDetails.actions,
-            currentHr: state.userDetails.hr
+            currentHr: state.userDetails.hr,
+            progress: state.progress.upgrade
         }
     }
 )(Order);

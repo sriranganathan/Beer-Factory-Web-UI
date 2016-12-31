@@ -5,24 +5,26 @@ import {reducer as toastrReducer} from 'react-redux-toastr';
 var {UserDetailsReducer, GameDetailsReducer, MenuDetailsReducer,
      LayoutDetailsReducer, MiscReducer, FactoryReducer, WarehousesReducer,
      OpponentWarehousesReducer, DemandsReducer, EventsReducer,
-     NotificationsReducer, PopularityReducer} = require('Reducers')
+     NotificationsReducer, PopularityReducer, ProgressReducer} =
+     require('Reducers')
 
 export var configure = (initialState = {}) => {
 
   var reducer = redux.combineReducers({
-    userDetails: UserDetailsReducer,
-    gameDetails: GameDetailsReducer,
-    menuDetails: MenuDetailsReducer,
-    layoutDetails: LayoutDetailsReducer,
-    factory: FactoryReducer,
-    warehouses: WarehousesReducer,
-    opponentWarehouses: OpponentWarehousesReducer,
     demands: DemandsReducer,
     events: EventsReducer,
-    notifications: NotificationsReducer,
-    popularity: PopularityReducer,
+    factory: FactoryReducer,
+    gameDetails: GameDetailsReducer,
+    layoutDetails: LayoutDetailsReducer,
+    menuDetails: MenuDetailsReducer,
     misc: MiscReducer,
-    toastr: toastrReducer
+    notifications: NotificationsReducer,
+    opponentWarehouses: OpponentWarehousesReducer,
+    popularity: PopularityReducer,
+    progress: ProgressReducer,
+    toastr: toastrReducer,
+    userDetails: UserDetailsReducer,
+    warehouses: WarehousesReducer
   });
 
   var store = redux.createStore(reducer, initialState, redux.compose(

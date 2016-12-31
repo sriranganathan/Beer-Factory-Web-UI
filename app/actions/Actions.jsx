@@ -106,3 +106,10 @@ export var setPopularity = (popularity) => {
     popularity
   }
 };
+
+export var setUpgradeProgress = (upgrade_finish_hr) => {
+  return {
+    type: 'SET_UPGRADE_PROGRESS',
+    upgrade:upgrade_finish_hr
+  };
+}

@@ -277,3 +277,21 @@ export var NotificationsReducer = (state = [], action) => {
   }
 
 };
+
+var defaultProgressState = {
+  upgrade: null
+};
+
+export var ProgressReducer = (state = defaultProgressState, action) => {
+
+  switch (action.type) {
+    case 'SET_UPGRADE_PROGRESS':
+      return {
+        ...state,
+        upgrade:action.upgrade
+      };
+    default:
+      return state
+  }
+
+};
