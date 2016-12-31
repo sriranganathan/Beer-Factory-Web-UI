@@ -58,6 +58,7 @@ module.exports = {
       Router: 'app/Router.jsx',
       SideBar: 'app/components/SideBar.jsx',
       Toastr: 'app/components/Toastr.jsx',
+      Upgrade: 'app/components/GameActions/Upgrade.jsx',
       UserFactory: 'app/components/MenuComponents/UserFactory.jsx'
     },
     extensions: ['', '.js', '.jsx']
