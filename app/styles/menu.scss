@@ -2,8 +2,12 @@
     position: relative;
 }
 
+.menu-element-container {
+    height: 85%;
+}
+
 #menu-footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
 }
 
@@ -48,4 +52,12 @@
 
 .menu-messages {
     font-size: 14px;
+}
+
+.menu-detail {
+    border: 1px solid #373a47;
+    background-color: #2263d6;
+    padding: 5px;
+    text-align: center;
+    color: white;
 }

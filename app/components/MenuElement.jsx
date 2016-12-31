@@ -2,7 +2,7 @@ var React = require('react');
 var {connect} = require('react-redux');
 var UserFactory = require('UserFactory');
 var Retailer = require('Retailer');
-var {Row} = require('react-foundation');
+var {Row, Column, Icon} = require('react-foundation');
 var Inactive = require('Inactive');
 var {convertHrtoDays} = require('helpers');
 
@@ -35,9 +35,11 @@ var MenuElement = React.createClass({
     var {day, hr} = convertHrtoDays(hr);
     return (
       <div id="menu-footer">
-        <Row>Available Money - ₹ {factory.money}</Row>
-        <Row>Score - {factory.user_score}</Row>
-        <Row>Day - {day}, Hr - {hr}</Row>
+      <Row>
+        <Column className="menu-detail" small={12}>Day {day}, hr {hr}</Column>
+        <Column className="menu-detail" small={5}>₹ {factory.money}</Column>
+        <Column className="menu-detail" small={7}>Score - {factory.user_score}</Column>
+      </Row>
       </div>
     );
   },
@@ -46,7 +48,7 @@ var MenuElement = React.createClass({
 
     return (
       <div className="container menu-container">
-        <div className="container menu-element-container">
+        <div className="menu-element-container">
           {this.generateContent()}
         </div>
         {this.generateFooter()}
