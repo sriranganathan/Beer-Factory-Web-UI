@@ -91,9 +91,11 @@ var Order = React.createClass({
         var {day, hr} = convertHrtoDays(currentHr + requiredHrs);
         var upgrade = upgrades[factory.level + 1];
         if (progress !== null && progress > currentHr) {
+            var {day, hr} = convertHrtoDays(progress);
             return (
                 <div className="minified">
                     <p>Upgradation in Progress</p>
+                    <p>Completion - Day {day}, Hr {hr}</p>
                 </div>
             );
         }

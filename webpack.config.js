@@ -52,6 +52,7 @@ module.exports = {
       MenuElement: 'app/components/MenuElement.jsx',
       MenuStyles: 'app/styles/menu.js',
       Order: 'app/components/GameActions/Order.jsx',
+      Popularity: 'app/components/MenuComponents/Popularity.jsx',
       Reducers: 'app/reducers/Reducers.jsx',
       Reset: 'app/components/Reset.jsx',
       Retailer: 'app/components/MenuComponents/Retailer.jsx',
