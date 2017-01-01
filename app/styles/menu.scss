@@ -69,6 +69,15 @@
     padding: 8px;
 }
 
+#skip-turn-disabled {
+    background-color: #3adb76;
+    opacity: 0.25;
+    cursor: not-allowed;
+    color: black;
+    font-size: 1rem;
+    padding: 8px;
+}
+
 #skip-turn:hover {
     background-color: #22bb5b;
     cursor: pointer;    

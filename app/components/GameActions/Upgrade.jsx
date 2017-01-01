@@ -38,6 +38,8 @@ var Order = React.createClass({
         }
 
         //Procede with API call
+        submit.className = "button success expanded disabled";
+        submit.value = "Starting...";
         var {user_id, auth_token, dispatch} = this.props;
         
         var data = {
@@ -50,6 +52,9 @@ var Order = React.createClass({
             var req_hr = actions.UPGRADE_ACTION.req_hr
             dispatch(setUpgradeProgress(req_hr + currentHr))
 
+            submit.className = "button success expanded";
+            submit.value = "Upgrade";
+
             advanceTurn({user_id, auth_token}, dispatch);
             toastr.success('Success', 'Upgradtion Started');
         }
@@ -60,6 +65,8 @@ var Order = React.createClass({
                 initiateReset(this.props.dispatch);
                 toastr.error('Invalid Credentials', 'Please Login Again');
             } else {
+                submit.className = "button success expanded";
+                submit.value = "Upgrade";
                 toastr.error('Error', msg);
                 dispatch(hideLoading());
             }

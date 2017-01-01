@@ -12,6 +12,12 @@ var {showLoading, hideLoading} = require('Actions');
 
 var MenuElement = React.createClass({
 
+  getInitialState: function () {
+    return {
+      isClicked: false
+    };
+  },
+
   generateContent: function() {
 
     var {index, space, hr} = this.props;
@@ -35,6 +41,18 @@ var MenuElement = React.createClass({
   },
 
   handleClick: function () {
+
+    if(this.state.isClicked) {
+      return false;
+    }
+
+    var submit = document.getElementById('skip-turn');
+    submit.innerHTML = 'Skipping';
+    submit.id = 'skip-turn-disabled';
+    this.setState({
+      isClicked: true
+    });
+    
     var {user_id, auth_token, dispatch} = this.props;
     var data = {
       user_id,
@@ -42,6 +60,13 @@ var MenuElement = React.createClass({
     };
     
     var success = (data) => {
+      submit.innerHTML = 'Skip Turn';
+      submit.id = 'skip-turn';
+
+      this.setState({
+        isClicked: false
+      });
+      
       advanceTurn({user_id, auth_token}, dispatch);
       toastr.success('Success', 'Skipped Turn Successfully');
     }
@@ -52,6 +77,13 @@ var MenuElement = React.createClass({
         initiateReset(this.props.dispatch);
         toastr.error('Invalid Credentials', 'Please Login Again');
       } else {
+        submit.innerHTML = 'Skip Turn';
+        submit.id = 'skip-turn';
+
+        this.setState({
+          isClicked: false
+        });
+
         toastr.error('Error', msg);
         dispatch(hideLoading());
       }
