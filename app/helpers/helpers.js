@@ -12,7 +12,7 @@ export var transformWarehouses = (warehouses) => {
     var result = {};
 
     var transformation = (warehouse) => {
-        result[warehouse.space_id] = warehouse;
+        result[warehouse.space__space_id] = warehouse;
     };
     warehouses.forEach(transformation);
 
