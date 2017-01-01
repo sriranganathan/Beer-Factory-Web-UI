@@ -8,15 +8,9 @@ var {initiateReset, convertHrtoDays} = require('helpers');
 var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
-var {showLoading, hideLoading} = require('Actions');
+var {showLoading, hideLoading, startAPICall, finishAPICall} = require('Actions');
 
 var MenuElement = React.createClass({
-
-  getInitialState: function () {
-    return {
-      isClicked: false
-    };
-  },
 
   generateContent: function() {
 
@@ -40,19 +34,21 @@ var MenuElement = React.createClass({
 
   },
 
+  generateButtonId: function () {
+    if(this.props.APIprogress)
+      return 'skip-turn-disabled';
+    return 'skip-turn';
+  },
+
   handleClick: function () {
 
-    if(this.state.isClicked) {
+    if(this.props.APIprogress) {
       return false;
     }
 
     var submit = document.getElementById('skip-turn');
     submit.innerHTML = 'Skipping';
-    submit.id = 'skip-turn-disabled';
-    this.setState({
-      isClicked: true
-    });
-    
+ 
     var {user_id, auth_token, dispatch} = this.props;
     var data = {
       user_id,
@@ -61,35 +57,27 @@ var MenuElement = React.createClass({
     
     var success = (data) => {
       submit.innerHTML = 'Skip Turn';
-      submit.id = 'skip-turn';
-
-      this.setState({
-        isClicked: false
-      });
+      dispatch(finishAPICall());
       
       advanceTurn({user_id, auth_token}, dispatch);
       toastr.success('Success', 'Skipped Turn Successfully');
     }
 
     var failure = (error) => {
+      dispatch(finishAPICall());
       var msg = error.message;
       if(msg === '401') {
         initiateReset(this.props.dispatch);
         toastr.error('Invalid Credentials', 'Please Login Again');
       } else {
         submit.innerHTML = 'Skip Turn';
-        submit.id = 'skip-turn';
-
-        this.setState({
-          isClicked: false
-        });
-
         toastr.error('Error', msg);
         dispatch(hideLoading());
       }
     };
 
     dispatch(showLoading());
+    dispatch(startAPICall());
     API.request('/no_operation', data).then(success, failure);
   },
 
@@ -99,7 +87,7 @@ var MenuElement = React.createClass({
     return (
       <div id="menu-footer">
       <Row>
-        <Column className="menu-detail" id="skip-turn" onClick={this.handleClick} small={5}>Skip Turn</Column>
+        <Column className="menu-detail" id={this.generateButtonId()} onClick={this.handleClick} small={5}>Skip Turn</Column>
         <Column className="menu-detail" small={7}>Day {day}, hr {hr}</Column>
         <Column className="menu-detail" small={7}>Score - {factory.user_score}</Column>
         <Column className="menu-detail" small={5}>₹ {factory.money}</Column>
@@ -131,7 +119,8 @@ module.exports = connect(
       factory: state.factory,
       hr: state.userDetails.hr,
       user_id: state.userDetails.user_id,
-      auth_token: state.userDetails.auth_token
+      auth_token: state.userDetails.auth_token,
+      APIprogress: state.progress.API,
     };
   }
 )(MenuElement);

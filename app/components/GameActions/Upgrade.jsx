@@ -5,13 +5,23 @@ var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {initiateReset, convertHrtoDays} = require('helpers');
-var {showLoading, hideLoading, setUpgradeProgress} = require('Actions');
+var {showLoading, hideLoading, setUpgradeProgress, startAPICall, finishAPICall} = require('Actions');
 
 var Order = React.createClass({
 
+    generateButtonClass: function () {
+        if(this.props.APIprogress)
+            return "button success expanded disabled";
+        else
+            return "button success expanded";
+    },
+
     handleSubmit: function (e) {
         e.preventDefault();
-        
+
+        if(this.props.APIprogress)
+            return false;
+
         var submit = this.refs.submit;
 
         this.refs.err_msg.innerHTML = "";
@@ -38,7 +48,6 @@ var Order = React.createClass({
         }
 
         //Procede with API call
-        submit.className = "button success expanded disabled";
         submit.value = "Starting...";
         var {user_id, auth_token, dispatch} = this.props;
         
@@ -48,11 +57,11 @@ var Order = React.createClass({
         };
 
         var success = (data) => {
+            dispatch(finishAPICall());
             var {actions} = this.props;
             var req_hr = actions.UPGRADE_ACTION.req_hr
             dispatch(setUpgradeProgress(req_hr + currentHr))
 
-            submit.className = "button success expanded";
             submit.value = "Upgrade";
 
             advanceTurn({user_id, auth_token}, dispatch);
@@ -60,12 +69,12 @@ var Order = React.createClass({
         }
 
         var failure = (error) => {
+            dispatch(finishAPICall());
             var msg = error.message;
             if(msg === '401') {
                 initiateReset(this.props.dispatch);
                 toastr.error('Invalid Credentials', 'Please Login Again');
             } else {
-                submit.className = "button success expanded";
                 submit.value = "Upgrade";
                 toastr.error('Error', msg);
                 dispatch(hideLoading());
@@ -73,6 +82,7 @@ var Order = React.createClass({
         };
 
         dispatch(showLoading());
+        dispatch(startAPICall());
         API.request('/upgrade', data).then(success, failure);
 
     },
@@ -85,7 +95,7 @@ var Order = React.createClass({
 
         return (
             <form onSubmit={this.handleSubmit}>
-                <input type="submit" className="button success expanded" ref="submit" value="Upgrade"/>
+                <input type="submit" className={this.generateButtonClass()} ref="submit" value="Upgrade"/>
             <p className="login__err-msg menu-messages" ref="err_msg"></p>
             </form>
         );
@@ -136,7 +146,8 @@ module.exports = connect(
             upgrades: state.gameDetails.upgrades,
             actions: state.gameDetails.actions,
             currentHr: state.userDetails.hr,
-            progress: state.progress.upgrade
+            progress: state.progress.upgrade,
+            APIprogress: state.progress.API
         }
     }
 )(Order);

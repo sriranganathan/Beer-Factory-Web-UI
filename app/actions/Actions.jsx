@@ -113,3 +113,15 @@ export var setUpgradeProgress = (upgrade_finish_hr) => {
     upgrade:upgrade_finish_hr
   };
 }
+
+export var startAPICall = () => {
+  return {
+    type: 'SET_API_PROGRESS'
+  };
+};
+
+export var finishAPICall = () => {
+  return {
+    type: 'RESET_API_PROGRESS'
+  };
+};

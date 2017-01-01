@@ -279,7 +279,8 @@ export var NotificationsReducer = (state = [], action) => {
 };
 
 var defaultProgressState = {
-  upgrade: null
+  upgrade: null,
+  API: false
 };
 
 export var ProgressReducer = (state = defaultProgressState, action) => {
@@ -289,6 +290,16 @@ export var ProgressReducer = (state = defaultProgressState, action) => {
       return {
         ...state,
         upgrade:action.upgrade
+      };
+    case 'SET_API_PROGRESS':
+      return {
+        ...state,
+        API: true
+      };
+    case 'RESET_API_PROGRESS':
+      return {
+        ...state,
+        API: false
       };
     default:
       return state

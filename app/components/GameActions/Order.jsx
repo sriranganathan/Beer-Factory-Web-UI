@@ -5,7 +5,7 @@ var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {initiateReset, convertHrtoDays} = require('helpers');
-var {showLoading, hideLoading} = require('Actions');
+var {showLoading, hideLoading, startAPICall, finishAPICall} = require('Actions');
 
 var Order = React.createClass({
 
@@ -23,9 +23,19 @@ var Order = React.createClass({
 
     },
 
+    generateButtonClass: function () {
+        if(this.props.APIprogress)
+            return "button success expanded disabled";
+        else
+            return "button success expanded";
+    },
+
     handleSubmit: function (e) {
         e.preventDefault();
-        
+
+        if(this.props.APIprogress)
+            return false;
+
         var submit = this.refs.submit;
         var qty = this.refs.qty;
 
@@ -60,7 +70,6 @@ var Order = React.createClass({
         }
 
         //Procede with API call
-        submit.className = "button success expanded disabled";
         submit.value = "Ordering...";
         var {user_id, auth_token, dispatch} = this.props;
         
@@ -71,20 +80,20 @@ var Order = React.createClass({
         };
 
         var success = (data) => {
+            dispatch(finishAPICall());
             advanceTurn({user_id, auth_token}, dispatch);
-            submit.className = "button success expanded";
             submit.value = "Order";
             qty.value = '';
             toastr.success('Success', 'Order Placed for' + order);
         }
 
         var failure = (error) => {
+            dispatch(finishAPICall());
             var msg = error.message;
             if(msg === '401') {
                 initiateReset(this.props.dispatch);
                 toastr.error('Invalid Credentials', 'Please Login Again');
             } else {
-                submit.className = "button success expanded";
                 submit.value = "Order";
                 toastr.error('Error', msg);
                 dispatch(hideLoading());
@@ -92,6 +101,7 @@ var Order = React.createClass({
         };
 
         dispatch(showLoading());
+        dispatch(startAPICall());
         API.request('/place_order', data).then(success, failure);
 
     },
@@ -110,7 +120,7 @@ var Order = React.createClass({
                 <br />
                 <form onSubmit={this.handleSubmit}>
                     <input type="number" ref="qty" placeholder="Enter Qty" onChange={this.getOrderAmt} required/>
-                    <input type="submit" className="button success expanded" ref="submit" value="Order"/>
+                    <input type="submit" className={this.generateButtonClass()} ref="submit" value="Order"/>
                 </form>
                 <p ref="info_msg" className="menu-messages"></p>
                 <p className="login__err-msg menu-messages" ref="err_msg"></p>
@@ -128,7 +138,8 @@ module.exports = connect(
             factory: state.factory,
             costTypes: state.gameDetails.costTypes,
             actions: state.gameDetails.actions,
-            currentHr: state.userDetails.hr
+            currentHr: state.userDetails.hr,
+            APIprogress: state.progress.API
         }
     }
 )(Order);
