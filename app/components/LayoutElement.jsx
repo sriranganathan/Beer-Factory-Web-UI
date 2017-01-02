@@ -28,10 +28,14 @@ var LayoutElement = React.createClass({
   },
 
   generateContent: function (space) {
-    if(this.props.warehouses[space.space_id])
-      return 'Warehouse';
-    else if(this.props.opponentWarehouses[space.space_id])
-      return 'Opponent Warehouse';
+    if(space.description === 'EMPTY') {
+      if(this.props.warehouses[space.space_id])
+        return 'Warehouse';
+      else if(this.props.opponentWarehouses[space.space_id])
+        return 'Opponent Warehouse';
+      else
+        return 'EMPTY';
+    }
     return space.description;
   },
 

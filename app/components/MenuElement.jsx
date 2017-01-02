@@ -9,6 +9,7 @@ var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {showLoading, hideLoading, startAPICall, finishAPICall} = require('Actions');
+var EmptySpace = require('EmptySpace');
 
 var MenuElement = React.createClass({
 
@@ -23,12 +24,19 @@ var MenuElement = React.createClass({
       return <Inactive desc={space.description} activation_hr={space.activation_hr}/>
 
     switch(space.description) {
+      case 'EMPTY':
+        if(this.props.warehouses[space.space_id])
+          return <center><h3>Warehouse</h3><hr /></center>;
+        else if(this.props.opponentWarehouses[space.space_id])
+          return <center><h3>Opponent Warehouse</h3><hr /></center>;
+        else
+          return <EmptySpace />;
       case 'USER FACTORY':
         return <UserFactory />;
       case 'RETAILER':
         return <Retailer />;
       default:
-        return <center><h3>{space.description}</h3></center>;
+        return <center><h3>{space.description}</h3><hr /></center>;
     }
 
 
@@ -121,6 +129,8 @@ module.exports = connect(
       user_id: state.userDetails.user_id,
       auth_token: state.userDetails.auth_token,
       APIprogress: state.progress.API,
+      warehouses: state.warehouses,
+      opponentWarehouses: state.opponentWarehouses
     };
   }
 )(MenuElement);

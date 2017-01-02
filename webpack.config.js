@@ -40,6 +40,7 @@ module.exports = {
       BeerFactory: 'app/components/BeerFactory.jsx',
       configureStore: 'app/store/ConfigureStore.jsx',
       Demand: 'app/components/MenuComponents/Demand.jsx',
+      EmptySpace: 'app/components/MenuComponents/EmptySpace.jsx',
       Game: 'app/components/Game.jsx',
       helpers: 'app/helpers/helpers.js',
       Inactive: 'app/components/MenuComponents/Inactive.jsx',
