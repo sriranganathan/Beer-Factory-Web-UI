@@ -10,6 +10,7 @@ var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {showLoading, hideLoading, startAPICall, finishAPICall} = require('Actions');
 var EmptySpace = require('EmptySpace');
+var Warehouse = require('Warehouse');
 
 var MenuElement = React.createClass({
 
@@ -26,7 +27,7 @@ var MenuElement = React.createClass({
     switch(space.description) {
       case 'EMPTY':
         if(this.props.warehouses[space.space_id])
-          return <center><h3>Warehouse</h3><hr /></center>;
+          return <Warehouse />;
         else if(this.props.opponentWarehouses[space.space_id])
           return <center><h3>Opponent Warehouse</h3><hr /></center>;
         else

@@ -62,9 +62,11 @@ module.exports = {
       Retailer: 'app/components/MenuComponents/Retailer.jsx',
       Router: 'app/Router.jsx',
       SideBar: 'app/components/SideBar.jsx',
+      Supply: 'app/components/GameActions/Supply.jsx',
       Toastr: 'app/components/Toastr.jsx',
       Upgrade: 'app/components/GameActions/Upgrade.jsx',
-      UserFactory: 'app/components/MenuComponents/UserFactory.jsx'
+      UserFactory: 'app/components/MenuComponents/UserFactory.jsx',
+      Warehouse: 'app/components/MenuComponents/Warehouse.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
