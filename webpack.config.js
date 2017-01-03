@@ -38,6 +38,7 @@ module.exports = {
       API: 'app/api/API.js',
       applicationStyles: 'app/styles/app.scss',
       BeerFactory: 'app/components/BeerFactory.jsx',
+      BuildWarehouse: 'app/components/GameActions/BuildWarehouse.jsx',
       configureStore: 'app/store/ConfigureStore.jsx',
       Demand: 'app/components/MenuComponents/Demand.jsx',
       EmptySpace: 'app/components/MenuComponents/EmptySpace.jsx',

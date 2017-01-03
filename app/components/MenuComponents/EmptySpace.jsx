@@ -1,5 +1,6 @@
 var React = require('react');
 var {Button, ButtonGroup, Link, Colors, Sizes} = require('react-foundation');
+var BuildWarehouse = require('BuildWarehouse');
 
 var EmptySpace = React.createClass({
 
@@ -18,6 +19,8 @@ var EmptySpace = React.createClass({
     getDisplayContent: function () {
 
         switch (this.state.current) {
+            case 'build':
+                return <BuildWarehouse />;
             default:
                 return <div>Coming Soon...</div>;
         }
