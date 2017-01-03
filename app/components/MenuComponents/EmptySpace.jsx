@@ -1,6 +1,7 @@
 var React = require('react');
 var {Button, ButtonGroup, Link, Colors, Sizes} = require('react-foundation');
 var BuildWarehouse = require('BuildWarehouse');
+var Advertise = require('Advertise');
 
 var EmptySpace = React.createClass({
 
@@ -21,6 +22,8 @@ var EmptySpace = React.createClass({
         switch (this.state.current) {
             case 'build':
                 return <BuildWarehouse />;
+            case 'advt':
+                return <Advertise />
             default:
                 return <div>Coming Soon...</div>;
         }

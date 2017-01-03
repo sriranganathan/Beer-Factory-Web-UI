@@ -35,6 +35,8 @@ module.exports = {
     alias: {
       Actions: 'app/actions/Actions.jsx',
       advanceTurn: 'app/api/advanceTurn.jsx',
+      Advertise: 'app/components/GameActions/Advertise.jsx',
+      Advertisement: 'app/components/MenuComponents/Advertisement.jsx',
       API: 'app/api/API.js',
       applicationStyles: 'app/styles/app.scss',
       BeerFactory: 'app/components/BeerFactory.jsx',

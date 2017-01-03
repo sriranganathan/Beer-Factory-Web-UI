@@ -5,6 +5,7 @@ var Toastr = React.createClass({
   render : function () {
     return (
       <ReduxToastr
+        id="toastr"
         timeOut={4000}
         newestOnTop={true}
         preventDuplicates={true}
