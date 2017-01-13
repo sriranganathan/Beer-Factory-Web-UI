@@ -5,11 +5,16 @@ var {showMenu, setCurrentIndex} = require('Actions');
 var LayoutElement = React.createClass({
 
   generateClass: function(space) {
+
+    if(space.description === 'ROAD')
+      return 'Road';
+
     var basic_classes = "LayoutSpace";
     if (space.activation_hr <= this.props.hr) 
       return basic_classes + " LayoutSpace-active";
     else 
       return basic_classes + " LayoutSpace-locked";
+
   },
 
   generateStyle: function(space, MaxXLoc, MaxYLoc) {
@@ -28,6 +33,10 @@ var LayoutElement = React.createClass({
   },
 
   generateContent: function (space) {
+
+    if(space.description === 'ROAD')
+      return '';
+
     if(space.description === 'EMPTY') {
       if(this.props.warehouses[space.space_id])
         return 'Warehouse';
@@ -36,11 +45,17 @@ var LayoutElement = React.createClass({
       else
         return 'EMPTY';
     }
+
     return space.description;
   },
 
   handleClick: function (e) {
     var {dispatch, index} = this.props;
+    var space = this.props.LayoutSpaces[index];
+
+    if(space.description === 'ROAD')
+      return false
+
     dispatch(setCurrentIndex(index));
     dispatch(showMenu());
   },
@@ -50,7 +65,9 @@ var LayoutElement = React.createClass({
     var space = this.props.LayoutSpaces[index];
     return (
       <div className={this.generateClass(space)} onClick={this.handleClick} style={this.generateStyle(space, MaxXLoc, MaxYLoc)}>
-        <p>{this.generateContent(space)}</p>
+        <div className="layout-content">
+          <center><p>{this.generateContent(space)}</p></center>
+        </div>
       </div>
     );
   }

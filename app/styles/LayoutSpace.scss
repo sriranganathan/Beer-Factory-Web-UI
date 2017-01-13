@@ -19,3 +19,17 @@ $brightness: 90%;
   -moz-filter: brightness($brightness);
   cursor: pointer;
 }
+
+.layout-content {
+    position: relative;
+}
+
+.Road {
+    z-index: 0;
+    position: absolute;
+    background-color: black;
+}
+
+#game-container {
+    background-color: yellowgreen;
+}

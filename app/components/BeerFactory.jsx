@@ -14,7 +14,11 @@ var BeerFactory = React.createClass({
     if(user_id === null)
       return <Login />;
     else
-      return <Game />;
+      return (
+        <div className="container" id="game-container">
+          <Game />
+        </div>
+      );
 
   },
 
@@ -22,7 +26,7 @@ var BeerFactory = React.createClass({
     return (
       <div id="outer-container" className="container">
         <SideBar />
-        <div id="page-wrap">
+        <div id="page-wrap" className="container">
           {this.renderContent()}
         </div>
       </div>

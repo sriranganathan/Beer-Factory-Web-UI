@@ -88,8 +88,8 @@ var LayoutList = React.createClass({
       );
     }else {
       return (
-        <div>
-          <div id="layout-container">
+        <div className="container">
+          <div id="layout-container" className="container">
             {this.generateList()}
           </div>
           {this.generateBackgroundLoader()}
