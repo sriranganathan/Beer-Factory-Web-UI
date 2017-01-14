@@ -146,7 +146,7 @@ module.exports = connect(
             upgrades: state.gameDetails.upgrades,
             actions: state.gameDetails.actions,
             currentHr: state.userDetails.hr,
-            progress: state.progress.upgrade,
+            progress: state.gameDetails.pendingUpgrades,
             APIprogress: state.progress.API
         }
     }

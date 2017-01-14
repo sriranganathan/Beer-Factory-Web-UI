@@ -65,6 +65,11 @@ var updateGameStorage = (state) => {
 
 export var GameDetailsReducer = (state = defaultGameState, action) => {
   switch (action.type) {
+    case 'SET_UPGRADE_PROGRESS':
+      return updateGameStorage({
+        ...state,
+        pendingUpgrades: action.upgrade
+      });
     case 'SET_GAME_STATE':
       var {type, ...rest} = action;
       return updateGameStorage({
@@ -279,18 +284,12 @@ export var NotificationsReducer = (state = [], action) => {
 };
 
 var defaultProgressState = {
-  upgrade: null,
   API: false
 };
 
 export var ProgressReducer = (state = defaultProgressState, action) => {
 
   switch (action.type) {
-    case 'SET_UPGRADE_PROGRESS':
-      return {
-        ...state,
-        upgrade:action.upgrade
-      };
     case 'SET_API_PROGRESS':
       return {
         ...state,

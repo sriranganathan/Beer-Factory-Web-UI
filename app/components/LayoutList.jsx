@@ -13,6 +13,13 @@ var LayoutList = React.createClass({
   fetchLayoutSpaces: function () {
 
     var success = (data) => {
+
+      var pending = data.pending_actions;
+      var pendingOrders = pending.factory_orders || [];
+      var pendingSupplies = pending.supplies || [];
+      var pendingWarehouses = pending.new_warehouses || [];
+      var pendingUpgrades = pending.upgrade.action_end || null;
+
       var {dispatch} = this.props;
       dispatch(setUserHr(data.user.hr));
       dispatch(setLayoutSpace(data.layout_spaces));
@@ -21,6 +28,10 @@ var LayoutList = React.createClass({
         advertisements: data.advertisements,
         costTypes: transformCostTypes(data.cost_types),
         upgrades: transformUpgrades(data.upgrades),
+        pendingOrders,
+        pendingSupplies,
+        pendingWarehouses,
+        pendingUpgrades
       }));
     };
 
