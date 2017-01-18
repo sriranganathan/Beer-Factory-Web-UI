@@ -5,7 +5,8 @@ var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {initiateReset, convertHrtoDays} = require('helpers');
-var {showLoading, hideLoading, startAPICall, finishAPICall} = require('Actions');
+var {showLoading, hideLoading, startAPICall, finishAPICall,
+     addPendingOrder} = require('Actions');
 
 var Order = React.createClass({
 
@@ -55,7 +56,9 @@ var Order = React.createClass({
             return false;
         }
 
-        var {factory,costTypes} = this.props;
+        var {factory,costTypes, currentHr, actions} = this.props;
+        var requiredHrs = actions.FACTORY_ORDER_ACTION.req_hr;
+        var end_hr = currentHr + requiredHrs;
 
         // check for capacity constraints
         if(order > (factory.capacity-factory.used)) {
@@ -81,6 +84,11 @@ var Order = React.createClass({
 
         var success = (data) => {
             dispatch(finishAPICall());
+            dispatch(addPendingOrder({
+                start_hr:currentHr,
+                end_hr:end_hr,
+                qty:order
+            }));
             advanceTurn({user_id, auth_token}, dispatch);
             submit.value = "Order";
             qty.value = '';

@@ -63,6 +63,50 @@ var updateGameStorage = (state) => {
   return state;
 };
 
+var removeExpiredPendingActions = (state, hr) => {
+
+  const objectWithoutKey = (object, key) => {
+    key = key.toString()
+    const {[key]: deletedKey, ...otherKeys} = object;
+    return otherKeys;
+  }
+
+  var pendingOrders = objectWithoutKey(state.pendingOrders, hr);
+  var pendingSupplies = objectWithoutKey(state.pendingSupplies, hr);
+  var pendingWarehouses = objectWithoutKey(state.pendingWarehouses, hr);
+
+  return updateGameStorage({
+    ...state,
+    pendingOrders,
+    pendingSupplies,
+    pendingWarehouses
+  });
+
+};
+
+var addPendingOrder = (state, order) => {
+
+  var pendingOrders = state.pendingOrders;
+  var end_hr = order.end_hr;
+
+  if(pendingOrders[end_hr] === undefined)
+    pendingOrders = {
+      ...pendingOrders,
+      [end_hr]: [order] 
+    };
+  else
+    pendingOrders = {
+      ...pendingOrders,
+      [end_hr]: [...pendingOrders[end_hr], order]
+    };
+
+  return updateGameStorage({
+    ...state,
+    pendingOrders
+  });
+
+}
+
 export var GameDetailsReducer = (state = defaultGameState, action) => {
   switch (action.type) {
     case 'SET_UPGRADE_PROGRESS':
@@ -70,6 +114,10 @@ export var GameDetailsReducer = (state = defaultGameState, action) => {
         ...state,
         pendingUpgrades: action.upgrade
       });
+    case 'REMOVE_EXPIRED_PENDING_ACTIONS':
+      return removeExpiredPendingActions(state, action.current_hr);
+    case 'ADD_PENDING_ORDER':
+      return addPendingOrder(state, action.order);
     case 'SET_GAME_STATE':
       var {type, ...rest} = action;
       return updateGameStorage({

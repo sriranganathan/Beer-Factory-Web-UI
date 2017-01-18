@@ -7,7 +7,8 @@ var {setUserCredentials, setLayoutSpace, setUserHr, setGameState} = require('Act
 var {initiateReset} = require('helpers');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
-var {transformCostTypes, transformActions, transformUpgrades} = require('helpers');
+var {transformCostTypes, transformActions, transformUpgrades,
+     transformPendingOrders} = require('helpers');
 var LayoutList = React.createClass({
 
   fetchLayoutSpaces: function () {
@@ -15,10 +16,13 @@ var LayoutList = React.createClass({
     var success = (data) => {
 
       var pending = data.pending_actions;
-      var pendingOrders = pending.factory_orders || [];
+      var pendingOrders = transformPendingOrders(pending.factory_orders || []);
       var pendingSupplies = pending.supplies || [];
       var pendingWarehouses = pending.new_warehouses || [];
-      var pendingUpgrades = pending.upgrade.action_end || null;
+      var pendingUpgrades = pending.upgrade || null;
+
+      if (pendingUpgrades !== null)
+        pendingUpgrades = pendingUpgrades.action_end;
 
       var {dispatch} = this.props;
       dispatch(setUserHr(data.user.hr));

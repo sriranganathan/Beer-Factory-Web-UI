@@ -86,3 +86,22 @@ export var transformUpgrades = (upgrades) => {
     return result;
 
 };
+
+export var transformPendingOrders = (orders) => {
+
+    var result = {};
+
+    var transformation = (order) => {
+        var end_hr = order.end_hr;
+        
+        if(result[end_hr] === undefined)
+            result[end_hr] = []
+
+        result[end_hr].push(order)
+
+    };
+
+    orders.forEach(transformation);
+    return result;
+
+};

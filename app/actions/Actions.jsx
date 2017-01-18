@@ -125,3 +125,17 @@ export var finishAPICall = () => {
     type: 'RESET_API_PROGRESS'
   };
 };
+
+export var removeExpiredPendingActions = (current_hr) => {
+  return {
+    type: 'REMOVE_EXPIRED_PENDING_ACTIONS',
+    current_hr
+  };
+};
+
+export var addPendingOrder = (order) => {
+  return {
+    type: 'ADD_PENDING_ORDER',
+    order
+  };
+};

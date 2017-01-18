@@ -3,13 +3,15 @@ var {initiateReset, transformWarehouses,
       transformDemands} = require('helpers');
 var {showLoading, hideLoading, setFactory, setWarehouses,
       setOpponentWarehouses, setDemands, setEvents,
-      setNotifications, setPopularity, setUserHr} = require('Actions');
+      setNotifications, setPopularity, setUserHr, removeExpiredPendingActions
+      } = require('Actions');
 var {toastr} = require('react-redux-toastr');
 
 var advanceTurn = (params, dispatch) => {
 
     var success = (data) => {
       dispatch(setUserHr(data.hr));
+      dispatch(removeExpiredPendingActions(data.hr));
       dispatch(setFactory(data.factory));
 
       dispatch(setWarehouses(transformWarehouses(data.warehouses)));
