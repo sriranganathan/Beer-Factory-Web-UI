@@ -105,3 +105,39 @@ export var transformPendingOrders = (orders) => {
     return result;
 
 };
+
+
+var createName = (type, index) => {
+
+    var retailerName = () => {
+        return "RET-"+index;
+    };
+
+    var warehouseName = () => {
+        return "WH-"+index;
+    };
+
+    switch (type) {
+        case 'RETAILER':
+            return retailerName();
+        case 'WAREHOUSE':
+            return warehouseName();
+        default:
+            return '';
+    }
+
+};
+
+export var generateNames = (LayoutSpaces) => {
+
+    var names = {};
+
+    var storeName = (space, index) => {
+        var type = space.description || 'WAREHOUSE';
+        names[space.space_id] = createName(type, index+1);
+    };
+
+    LayoutSpaces.forEach(storeName);
+    return names;
+
+};

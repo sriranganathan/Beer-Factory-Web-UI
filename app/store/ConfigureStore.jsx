@@ -5,7 +5,7 @@ import {reducer as toastrReducer} from 'react-redux-toastr';
 var {UserDetailsReducer, GameDetailsReducer, MenuDetailsReducer,
      LayoutDetailsReducer, MiscReducer, FactoryReducer, WarehousesReducer,
      OpponentWarehousesReducer, DemandsReducer, EventsReducer,
-     NotificationsReducer, PopularityReducer, ProgressReducer} =
+     NotificationsReducer, PopularityReducer, ProgressReducer, NamesReducer} =
      require('Reducers')
 
 export var configure = (initialState = {}) => {
@@ -24,7 +24,8 @@ export var configure = (initialState = {}) => {
     progress: ProgressReducer,
     toastr: toastrReducer,
     userDetails: UserDetailsReducer,
-    warehouses: WarehousesReducer
+    warehouses: WarehousesReducer,
+    names: NamesReducer
   });
 
   var store = redux.createStore(reducer, initialState, redux.compose(

@@ -353,3 +353,18 @@ export var ProgressReducer = (state = defaultProgressState, action) => {
   }
 
 };
+
+export var NamesReducer = (state = {}, action) => {
+
+  switch (action.type) {
+    case 'SET_NAMES':
+      console.log('hi');
+      return {
+        ...state,
+        ...action.names
+      };
+    default:
+      return state
+  }
+
+};

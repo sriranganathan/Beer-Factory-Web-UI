@@ -139,3 +139,10 @@ export var addPendingOrder = (order) => {
     order
   };
 };
+
+export var setNames = (names) => {
+  return {
+    type: 'SET_NAMES',
+    names
+  };
+};

@@ -3,12 +3,13 @@ var {connect} = require('react-redux');
 var LayoutElement = require('LayoutElement');
 var Loader = require('Loader');
 var API = require('API');
-var {setUserCredentials, setLayoutSpace, setUserHr, setGameState} = require('Actions');
+var {setUserCredentials, setLayoutSpace, setUserHr, setGameState,
+     setNames} = require('Actions');
 var {initiateReset} = require('helpers');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {transformCostTypes, transformActions, transformUpgrades,
-     transformPendingOrders} = require('helpers');
+     transformPendingOrders, generateNames} = require('helpers');
 var LayoutList = React.createClass({
 
   fetchLayoutSpaces: function () {
@@ -26,7 +27,18 @@ var LayoutList = React.createClass({
 
       var {dispatch} = this.props;
       dispatch(setUserHr(data.user.hr));
-      dispatch(setLayoutSpace(data.layout_spaces));
+
+      dispatch(setLayoutSpace(data.layout_spaces.sort(function(x, y){
+        return x.activation_hr - y.activation_hr;
+      })));
+
+      var retailers = data.layout_spaces.filter(function(space){
+        return space.description === 'RETAILER';
+      });
+      
+      var names = generateNames(retailers);
+      dispatch(setNames(names));
+
       dispatch(setGameState({
         actions: transformActions(data.actions),
         advertisements: data.advertisements,
@@ -72,6 +84,16 @@ var LayoutList = React.createClass({
 
     if(!this.props.isGameStateSet) {
       this.fetchLayoutSpaces();
+    } else {
+
+      var {LayoutSpaces, dispatch} = this.props;
+      var retailers = LayoutSpaces.filter(function(space){
+        return space.description === 'RETAILER';
+      });
+      
+      var names = generateNames(retailers);
+      dispatch(setNames(names));
+
     }
 
     var {user_id, auth_token, dispatch} = this.props;

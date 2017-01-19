@@ -46,6 +46,9 @@ var LayoutElement = React.createClass({
         return 'EMPTY';
     }
 
+    if(space.description === 'RETAILER')
+      return this.props.names[space.space_id];
+
     return space.description;
   },
 
@@ -82,7 +85,8 @@ module.exports = connect(
       MaxYLoc: state.layoutDetails.MaxYLoc,
       hr: state.userDetails.hr,
       warehouses: state.warehouses,
-      opponentWarehouses: state.opponentWarehouses
+      opponentWarehouses: state.opponentWarehouses,
+      names: state.names
     };
   }
 )(LayoutElement);
