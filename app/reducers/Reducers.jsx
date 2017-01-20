@@ -358,7 +358,6 @@ export var NamesReducer = (state = {}, action) => {
 
   switch (action.type) {
     case 'SET_NAMES':
-      console.log('hi');
       return {
         ...state,
         ...action.names

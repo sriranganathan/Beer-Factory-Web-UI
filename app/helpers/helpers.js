@@ -110,11 +110,11 @@ export var transformPendingOrders = (orders) => {
 var createName = (type, index) => {
 
     var retailerName = () => {
-        return "RET-"+index;
+        return String.fromCharCode(64+index);
     };
 
     var warehouseName = () => {
-        return "WH-"+index;
+        return index;
     };
 
     switch (type) {
@@ -134,7 +134,8 @@ export var generateNames = (LayoutSpaces) => {
 
     var storeName = (space, index) => {
         var type = space.description || 'WAREHOUSE';
-        names[space.space_id] = createName(type, index+1);
+        var id = space.space_id || space.space__space_id;
+        names[id] = createName(type, index+1);
     };
 
     LayoutSpaces.forEach(storeName);

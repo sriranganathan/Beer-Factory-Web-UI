@@ -1,10 +1,10 @@
 var API = require('API');
 var {initiateReset, transformWarehouses,
-      transformDemands} = require('helpers');
+      transformDemands, generateNames} = require('helpers');
 var {showLoading, hideLoading, setFactory, setWarehouses,
       setOpponentWarehouses, setDemands, setEvents,
-      setNotifications, setPopularity, setUserHr, removeExpiredPendingActions
-      } = require('Actions');
+      setNotifications, setPopularity, setUserHr, removeExpiredPendingActions,
+      setNames} = require('Actions');
 var {toastr} = require('react-redux-toastr');
 
 var advanceTurn = (params, dispatch) => {
@@ -15,6 +15,11 @@ var advanceTurn = (params, dispatch) => {
       dispatch(setFactory(data.factory));
 
       dispatch(setWarehouses(transformWarehouses(data.warehouses)));
+
+      data.warehouses.sort((x, y) => x.active_from - y.active_from);
+      var names = generateNames(data.warehouses);
+      dispatch(setNames(names));
+
       dispatch(setOpponentWarehouses(
         transformWarehouses(data.opponent_warehouses)
       ));

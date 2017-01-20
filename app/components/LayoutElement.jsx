@@ -1,6 +1,7 @@
 var React = require('react');
 var {connect} = require('react-redux');
 var {showMenu, setCurrentIndex} = require('Actions');
+var {Badge, Colors} = require('react-foundation');
 
 var LayoutElement = React.createClass({
 
@@ -32,6 +33,17 @@ var LayoutElement = React.createClass({
     };
   },
 
+  createContentBlock: function (space) {
+    if(space.description !== 'ROAD') {
+      return (
+        <div className="layout-content container">
+          <center><p>{this.generateContent(space)}</p></center>
+          {this.generateBadge(space)}
+        </div>
+      );
+    }
+  },
+
   generateContent: function (space) {
 
     if(space.description === 'ROAD')
@@ -46,10 +58,29 @@ var LayoutElement = React.createClass({
         return 'EMPTY';
     }
 
-    if(space.description === 'RETAILER')
-      return this.props.names[space.space_id];
-
     return space.description;
+  },
+
+  generateBadge: function (space) {
+
+    var name = this.props.names[space.space_id]
+    if(space.description === 'RETAILER')
+      return (
+        <div className="BadgeContainer">
+          <Badge>
+            {name}
+          </Badge>
+        </div>
+      );
+
+    if(name)
+      return (
+        <div className="BadgeContainer">
+          <Badge color={Colors.ALERT}>
+            {name}
+          </Badge>
+        </div>
+      );
   },
 
   handleClick: function (e) {
@@ -68,9 +99,7 @@ var LayoutElement = React.createClass({
     var space = this.props.LayoutSpaces[index];
     return (
       <div className={this.generateClass(space)} onClick={this.handleClick} style={this.generateStyle(space, MaxXLoc, MaxYLoc)}>
-        <div className="layout-content">
-          <center><p>{this.generateContent(space)}</p></center>
-        </div>
+        {this.createContentBlock(space)}
       </div>
     );
   }
