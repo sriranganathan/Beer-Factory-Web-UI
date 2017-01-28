@@ -1,14 +1,21 @@
 var React = require('react');
 var {connect} = require('react-redux');
-var {Row, Column} = require('react-foundation');
+var {Row, Column, Button, Colors} = require('react-foundation');
 var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {initiateReset, convertHrtoDays} = require('helpers');
 var {showLoading, hideLoading, startAPICall, finishAPICall,
      addPendingOrder} = require('Actions');
+var PendingOrderElement = require('PendingOrderElement');
 
 var Order = React.createClass({
+
+    getInitialState: function () {
+        return {
+            displayPending: false
+        };
+    },
 
     getOrderAmt: function() {
         var qty = Math.floor(this.refs.qty.value);
@@ -26,9 +33,9 @@ var Order = React.createClass({
 
     generateButtonClass: function () {
         if(this.props.APIprogress)
-            return "button success expanded disabled";
+            return "button success expanded disabled no-margin-bottom";
         else
-            return "button success expanded";
+            return "button success expanded no-margin-bottom";
     },
 
     handleSubmit: function (e) {
@@ -114,10 +121,57 @@ var Order = React.createClass({
 
     },
 
-    render: function () {
+    handleClick: function (val) {
+        return () => {
+            this.setState({
+                displayPending: val
+            });
+        };
+    },
+
+    generatePendingOrderElement: function (element, index) {
+        return <PendingOrderElement
+                key={index}
+                start={element.start_hr}
+                end={element.end_hr}
+                qty={element.qty} />;
+    },
+
+    generatePendingOrderList: function () {
+        var {pendingOrders} = this.props;
+
+        if(Object.keys(pendingOrders).length === 0)
+            return 'No Pending Orders';
+
+        var result = [], index=0;
+
+        for(var k in pendingOrders) {
+            var cur = pendingOrders[k];
+            for(var i in cur) {
+                result.push(this.generatePendingOrderElement(cur[i], index));
+                index++;
+            }
+        }
+
+        return result;
+
+    },
+
+    generateContent: function () {
         var {factory, costTypes, currentHr, actions} = this.props;
         var requiredHrs = actions.FACTORY_ORDER_ACTION.req_hr;
         var {day, hr} = convertHrtoDays(currentHr + requiredHrs);
+
+        if(this.state.displayPending)
+            return (
+                <div className="minified">
+                    {this.generatePendingOrderList()}
+                    <Column small={12}>
+                        <Button type="button" color={Colors.SECONDARY} isExpanded onClick={this.handleClick(false)}>Go Back</Button>
+                    </Column>
+                </div>
+            );
+
         return (
             <div className="minified">
                 <p>Total Capacity : {factory.capacity}</p>
@@ -127,13 +181,26 @@ var Order = React.createClass({
                 <p>Delivery : Day {day}, Hr {hr}</p>
                 <br />
                 <form onSubmit={this.handleSubmit}>
-                    <input type="number" ref="qty" placeholder="Enter Qty" onChange={this.getOrderAmt} required/>
-                    <input type="submit" className={this.generateButtonClass()} ref="submit" value="Order"/>
+                    <Row>
+                        <Column small={12} medium={8} className="stacked-horizontally">
+                            <input type="number" ref="qty" placeholder="Enter Qty" onChange={this.getOrderAmt} className="no-margin-bottom" required/>
+                        </Column>
+                        <Column small={12} medium={4} className="stacked-horizontally">
+                            <input type="submit" className={this.generateButtonClass()} ref="submit" value="Order"/>
+                        </Column>
+                        <Column small={12}>
+                            <Button type="button" color={Colors.SECONDARY} isExpanded onClick={this.handleClick(true)}>View Pending Orders</Button>
+                        </Column>
+                    </Row>
                 </form>
                 <p ref="info_msg" className="menu-messages"></p>
                 <p className="login__err-msg menu-messages" ref="err_msg"></p>
             </div>
         );
+    },
+
+    render: function () {
+        return this.generateContent();
     }
 
 });
@@ -147,7 +214,8 @@ module.exports = connect(
             costTypes: state.gameDetails.costTypes,
             actions: state.gameDetails.actions,
             currentHr: state.userDetails.hr,
-            APIprogress: state.progress.API
+            APIprogress: state.progress.API,
+            pendingOrders: state.gameDetails.pendingOrders
         }
     }
 )(Order);
