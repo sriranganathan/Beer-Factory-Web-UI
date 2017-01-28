@@ -9,6 +9,13 @@ var {toastr} = require('react-redux-toastr');
 
 var advanceTurn = (params, dispatch) => {
 
+    var displayNotifications = (notification, index) => {
+      const options = {
+        timeout: 3500 + index*500
+      };
+      toastr.info('Notification', notification.notif_desc, options);
+    };
+
     var success = (data) => {
       dispatch(setUserHr(data.hr));
       dispatch(removeExpiredPendingActions(data.hr));
@@ -29,6 +36,9 @@ var advanceTurn = (params, dispatch) => {
       dispatch(setNotifications(data.notifications));
       dispatch(setPopularity(data.popularity));
       dispatch(hideLoading());
+
+      data.notifications.forEach(displayNotifications);
+
     };
 
     var failure = (error) => {
