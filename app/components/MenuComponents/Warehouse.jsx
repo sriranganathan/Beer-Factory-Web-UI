@@ -27,9 +27,12 @@ var Warehouse = React.createClass({
     },
 
     render: function () {
+        var {names, index, LayoutSpaces} = this.props;
+        var space = LayoutSpaces[index];
+        var name = names[space.space_id];
         return (
             <div>
-                <center><h3>Warehouse</h3></center>
+                <center><h3>Warehouse - {name}</h3></center>
                 <hr />
                 <div className="scrollable">
                     {this.generateContent()}
@@ -46,7 +49,8 @@ module.exports = connect(
             index: state.layoutDetails.CurrentIndex,
             LayoutSpaces: state.layoutDetails.LayoutSpaces,
             warehouses: state.warehouses,
-            hr: state.userDetails.hr
+            hr: state.userDetails.hr,
+            names: state.names
         };
     }
 )(Warehouse);

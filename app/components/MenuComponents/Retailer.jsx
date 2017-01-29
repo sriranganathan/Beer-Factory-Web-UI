@@ -53,9 +53,11 @@ var UserFactory = React.createClass({
     },
 
     render: function () {
+        var {names, space} = this.props;
+        var name = names[space.space_id];
         return (
             <div>
-                <center><h3>Retailer</h3></center>
+                <center><h3>Retailer - {name}</h3></center>
                 <hr />
                 <center>
                     <div className="button-group-basics-example">
@@ -80,7 +82,8 @@ module.exports = connect(
         return {
             space: state.layoutDetails.LayoutSpaces[
                 state.layoutDetails.CurrentIndex],
-            demands: state.demands
+            demands: state.demands,
+            names: state.names
         };
     }
 )(UserFactory);
