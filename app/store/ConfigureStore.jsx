@@ -5,8 +5,8 @@ import {reducer as toastrReducer} from 'react-redux-toastr';
 var {UserDetailsReducer, GameDetailsReducer, MenuDetailsReducer,
      LayoutDetailsReducer, MiscReducer, FactoryReducer, WarehousesReducer,
      OpponentWarehousesReducer, DemandsReducer, EventsReducer,
-     NotificationsReducer, PopularityReducer, ProgressReducer, NamesReducer} =
-     require('Reducers')
+     NotificationsReducer, PopularityReducer, ProgressReducer, NamesReducer,
+     SupplyProgressReducer} = require('Reducers')
 
 export var configure = (initialState = {}) => {
 
@@ -18,14 +18,15 @@ export var configure = (initialState = {}) => {
     layoutDetails: LayoutDetailsReducer,
     menuDetails: MenuDetailsReducer,
     misc: MiscReducer,
+    names: NamesReducer,
     notifications: NotificationsReducer,
     opponentWarehouses: OpponentWarehousesReducer,
     popularity: PopularityReducer,
     progress: ProgressReducer,
+    supplyProgress: SupplyProgressReducer,
     toastr: toastrReducer,
     userDetails: UserDetailsReducer,
-    warehouses: WarehousesReducer,
-    names: NamesReducer
+    warehouses: WarehousesReducer
   });
 
   var store = redux.createStore(reducer, initialState, redux.compose(

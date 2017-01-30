@@ -142,3 +142,30 @@ export var generateNames = (LayoutSpaces) => {
     return names;
 
 };
+
+export var CreateSupplyProgress = (existing, supply) => {
+
+    var new_supply = [];
+    var from = supply.source_space_id;
+    var to = supply.destination_space_id;
+    var qty = supply.quantity
+    var flag = true;
+
+    for(var k in existing) {
+        var current = existing[k];
+        if (current.source_space_id === from && current.destination_space_id === to) {
+            flag = false;
+            current = {
+                ...current,
+                quantity: current.quantity + qty
+            };
+        }
+        new_supply.push(current);
+    }
+
+    if(flag)
+        new_supply.push(supply);
+
+    return new_supply;
+
+};

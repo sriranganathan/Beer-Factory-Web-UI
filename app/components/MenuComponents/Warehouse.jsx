@@ -34,7 +34,7 @@ var Warehouse = React.createClass({
             <div>
                 <center><h3>Warehouse - {name}</h3></center>
                 <hr />
-                <div className="scrollable">
+                <div id="scrollable">
                     {this.generateContent()}
                 </div>
             </div>

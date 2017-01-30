@@ -146,3 +146,10 @@ export var setNames = (names) => {
     names
   };
 };
+
+export var setSupplyProgress = (supply) => {
+  return {
+    type: 'SET_SUPPLY_PROGRESS',
+    supply
+  };
+};

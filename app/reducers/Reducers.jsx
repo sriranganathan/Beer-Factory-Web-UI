@@ -367,3 +367,14 @@ export var NamesReducer = (state = {}, action) => {
   }
 
 };
+
+export var SupplyProgressReducer = (state = [], action) => {
+
+  switch (action.type) {
+    case 'SET_SUPPLY_PROGRESS':
+      return action.supply;
+    default:
+      return state;
+  }
+
+};

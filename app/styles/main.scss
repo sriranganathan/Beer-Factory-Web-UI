@@ -47,3 +47,18 @@ input {
 .no-margin-bottom {
   margin-bottom: 2px !important;
 }
+
+.no-margin-top {
+  margin-top: 0.5rem !important;
+}
+
+select {
+  background-origin: border-box;
+}
+
+.minified-select > select {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
