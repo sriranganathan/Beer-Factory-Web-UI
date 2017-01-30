@@ -4,7 +4,7 @@ var {initiateReset, transformWarehouses,
 var {showLoading, hideLoading, setFactory, setWarehouses,
       setOpponentWarehouses, setDemands, setEvents,
       setNotifications, setPopularity, setUserHr, removeExpiredPendingActions,
-      setNames} = require('Actions');
+      setNames, setSupplyProgress} = require('Actions');
 var {toastr} = require('react-redux-toastr');
 
 var advanceTurn = (params, dispatch) => {
@@ -35,6 +35,7 @@ var advanceTurn = (params, dispatch) => {
       dispatch(setEvents(data.events));
       dispatch(setNotifications(data.notifications));
       dispatch(setPopularity(data.popularity));
+      dispatch(setSupplyProgress([]));
       dispatch(hideLoading());
 
       data.notifications.forEach(displayNotifications);

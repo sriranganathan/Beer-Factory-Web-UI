@@ -44,6 +44,7 @@ module.exports = {
       configureStore: 'app/store/ConfigureStore.jsx',
       Demand: 'app/components/MenuComponents/Demand.jsx',
       EmptySpace: 'app/components/MenuComponents/EmptySpace.jsx',
+      FinalizeSupply: 'app/components/GameActions/FinalizeSupply.jsx',
       Game: 'app/components/Game.jsx',
       helpers: 'app/helpers/helpers.js',
       Inactive: 'app/components/MenuComponents/Inactive.jsx',
@@ -80,6 +81,9 @@ module.exports = {
         },
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/
+      }, {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: "file-loader?name=./images/[name].[ext]"
       }
     ]
   },

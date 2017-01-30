@@ -2,8 +2,7 @@ var React = require('react');
 var {connect} = require('react-redux');
 var {Column, Button} = require('react-foundation');
 var {convertHrtoDays, CreateSupplyProgress} = require('helpers');
-var {showLoading, hideLoading, startAPICall, finishAPICall,
-     addPendingOrder, setSupplyProgress} = require('Actions');
+var {hideMenu, showMenu, setCurrentIndex, setSupplyProgress} = require('Actions');
 var Supply = React.createClass({
 
     getInitialState: function () {
@@ -105,6 +104,7 @@ var Supply = React.createClass({
         //TODO: Check for money Constraints
 
         //Everything OK. Append to Supply Progress.
+        qty.value = '';
         var {dispatch} = this.props;
         var supply_object = {
             'source_space_id': space_id,
@@ -283,10 +283,15 @@ var Supply = React.createClass({
         );
     },
 
+    finalizeSupply: function () {
+        var {dispatch} = this.props;
+        dispatch(setCurrentIndex('finalizeSupply'));
+    },
+
     generateFinalizeButton: function () {
         return (
             <Column>
-                <Button type="button" className={this.generateButtonClass()} isExpanded >Finalize Supplies</Button>
+                <Button type="button" className={this.generateButtonClass()} isExpanded onClick={this.finalizeSupply}>Finalize Supplies</Button>
             </Column>
         );
     },

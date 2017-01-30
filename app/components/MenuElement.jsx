@@ -11,6 +11,7 @@ var advanceTurn = require('advanceTurn');
 var {showLoading, hideLoading, startAPICall, finishAPICall} = require('Actions');
 var EmptySpace = require('EmptySpace');
 var Warehouse = require('Warehouse');
+var FinalizeSupply = require('FinalizeSupply');
 
 var MenuElement = React.createClass({
 
@@ -18,8 +19,11 @@ var MenuElement = React.createClass({
 
     var {index, space, hr} = this.props;
     
-    if (space === undefined)
-      return false;
+    if (space === undefined) {
+      if (index === 'finalizeSupply') {
+        return <FinalizeSupply />;
+      }
+    }
 
     if(space.activation_hr > hr)
       return <Inactive desc={space.description} activation_hr={space.activation_hr}/>
