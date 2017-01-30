@@ -39,6 +39,17 @@ var Supply = React.createClass({
         return allocated;
     },
 
+    getNetSupply: function (supply, space_id) {
+        var allocated = 0; 
+        for(var i in supply) {
+            if (supply[i].destination_space_id == space_id)
+                allocated += supply[i].quantity;
+            else if (supply[i].source_space_id == space_id)
+                allocated -= supply[i].quantity;
+        }
+        return allocated;
+    },
+
     handleSubmit: function (e) {
         e.preventDefault();
 
@@ -138,7 +149,25 @@ var Supply = React.createClass({
     },
 
     generateWarehouseConentent: function () {
-        return 'Warehouse';
+        var {warehouses, supplyProgress} = this.props;
+        var {selected} = this.state;
+        var allocated = this.getNetSupply(supplyProgress, selected);
+        var stock = warehouses[selected].stock;
+        return (
+            <div>
+                <p>Existing Stock: {stock}</p>
+                <p>Allocated Supply: {allocated}</p>
+                <form className="no-margin-top" onSubmit={this.handleSubmit}>
+                    <Column small={12} medium={8} className="stacked-horizontally">
+                        <input type="number" ref="qty" placeholder="Enter Qty" className="no-margin-bottom" required/>
+                    </Column>
+                    <Column small={12} medium={4} className="stacked-horizontally">
+                        <input type="submit" className="button expanded no-margin-bottom secondary" ref="submit" value="Add"/>
+                    </Column>
+                    <p className="login__err-msg menu-messages" ref="err_msg"></p>
+                </form>
+            </div>
+        );
     },
 
     generateContent: function () {
