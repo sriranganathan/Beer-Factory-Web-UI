@@ -1,11 +1,11 @@
 var React = require('react');
 var {connect} = require('react-redux');
-var {Callout, Button, Column} = require('react-foundation');
+var {Callout, Button, Column, Link, Sizes, Colors} = require('react-foundation');
 var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {initiateReset} = require('helpers');
-var {showLoading, hideLoading, startAPICall, finishAPICall, hideMenu} = require('Actions');
+var {showLoading, hideLoading, startAPICall, finishAPICall, hideMenu, setSupplyProgress} = require('Actions');
 
 var FinalizeSupply = React.createClass({
 
@@ -71,9 +71,23 @@ var FinalizeSupply = React.createClass({
 
         return (
             <Column>
-                <Button type="button" className={this.generateButtonClass()} isExpanded onClick={this.finalizeSupply} ref="submit">{this.generateButtonContent()}</Button>
+                <Button type="button" className={this.generateButtonClass()} isExpanded onClick={this.finalizeSupply}>{this.generateButtonContent()}</Button>
             </Column>
         );
+    },
+
+    removeItemFromSupply: function (index) {
+        var {dispatch, supplyProgress} = this.props;
+
+        return function () {
+            var new_supply = [];
+            for(var i in supplyProgress) {
+                if (i == index)
+                    continue;
+                new_supply.push(supplyProgress[i]);
+            }
+            dispatch(setSupplyProgress(new_supply));
+        };
     },
 
     getDisplayContent: function () {
@@ -87,7 +101,7 @@ var FinalizeSupply = React.createClass({
             );
         }
 
-        var genrateSupplyElement = function (supply, index) {
+        var genrateSupplyElement = (supply, index) => {
             var from = "Warehouse " + names[supply.source_space_id];
             var to =  names[supply.destination_space_id];
             var qty = supply.quantity;
@@ -98,11 +112,12 @@ var FinalizeSupply = React.createClass({
                 to = 'Warehouse ' + to;
 
             return (
-                <div key={index}>
+                <div key={index} style={{position:"relative"}}>
                     <Callout className="demand minified">
                         <p>From : {from}</p>
                         <p>To : {to}</p>
                         <p>Qty : {qty}</p>
+                        <Link size={Sizes.TINY} color={Colors.ALERT} onClick={this.removeItemFromSupply(index)} style={{position:"absolute", right:"2px", bottom:"2px"}}>Remove</Link>
                     </Callout>
                 </div>
             );
