@@ -1,8 +1,17 @@
 var React = require('react');
+var {connect} = require('react-redux');
+var {initiateReset, convertHrtoDays} = require('helpers');
 
 var navbar = React.createClass({
 
+    handleLogout: function () {
+      var {dispatch} = this.props;
+      initiateReset(dispatch);
+    },
+
     render: function () {
+        var {factory, hr} = this.props;
+        var {day, hr} = convertHrtoDays(hr);
         return (
            <div className="top-bar" id="navbar">
               <div className="top-bar-title">
@@ -11,9 +20,10 @@ var navbar = React.createClass({
               <div id="responsive-menu">
                 <div className="top-bar-right">
                   <ul className="menu">
-                    <li><a href="#">One</a></li>
-                    <li><a href="#">Two</a></li>
-                    <li><a href="#">Three</a></li>
+                    <li><p>Bal - ₹ {factory.money}</p></li>
+                    <li><p>Score - {factory.user_score}</p></li>
+                    <li><p>Day {day}, hr {hr}</p></li>
+                    <li className="hoverable" onClick={this.handleLogout}><p>Logout</p></li>
                   </ul>
                 </div>
               </div>
@@ -23,4 +33,11 @@ var navbar = React.createClass({
 
 });
 
-module.exports = navbar;
+module.exports = connect(
+  (state) => {
+    return {
+      factory: state.factory,
+      hr: state.userDetails.hr,
+    };
+  }
+)(navbar);

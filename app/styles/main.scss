@@ -84,6 +84,7 @@ select {
   padding-bottom: 0px;
   padding-right: 0px;
   padding-left: 1rem;
+  overflow: hidden;
 }
 
 .menu > li {
@@ -91,11 +92,15 @@ select {
   border-left: 1px solid #41525e;
 }
 
-.menu > li:hover {
+.menu > .hoverable {
+  cursor: pointer;
+}
+
+.menu > .hoverable:hover {
   background: #41525e;
 }
 
-.menu a {
+.menu p {
   height: 45px;
   line-height: 45px !important;
   color: #e6e6e6;
@@ -103,7 +108,7 @@ select {
   padding-bottom: 0 !important;
 }
 
-.menu > li > a {
+.menu > li > p {
   display: block;
   padding: 0.7rem 1rem;
   line-height: 1;

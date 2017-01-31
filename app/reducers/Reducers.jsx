@@ -65,6 +65,9 @@ var updateGameStorage = (state) => {
 
 var removeExpiredPendingActions = (state, hr) => {
 
+  if(state === null || state === undefined)
+    return state
+
   const objectWithoutKey = (object, key) => {
     key = key.toString()
     const {[key]: deletedKey, ...otherKeys} = object;
