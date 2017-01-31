@@ -56,6 +56,7 @@ module.exports = {
       Main: 'app/components/Main.jsx',
       MenuElement: 'app/components/MenuElement.jsx',
       MenuStyles: 'app/styles/menu.js',
+      Navbar: 'app/components/Navbar.jsx',
       Order: 'app/components/GameActions/Order.jsx',
       PendingOrderElement: 'app/components/MenuComponents/PendingOrderElement.jsx',
       Popularity: 'app/components/MenuComponents/Popularity.jsx',

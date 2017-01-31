@@ -125,7 +125,7 @@ var LayoutList = React.createClass({
       );
     }else {
       return (
-        <div className="container">
+        <div className="container" id="layout-list">
           <div id="layout-container" className="container">
             {this.generateList()}
           </div>

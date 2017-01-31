@@ -2,6 +2,7 @@ var React = require('react');
 var LayoutList = require('LayoutList');
 var {connect} = require('react-redux');
 var {showMenu} = require('Actions');
+var Navbar = require('Navbar');
 
 var Game = React.createClass({
 
@@ -14,7 +15,8 @@ var Game = React.createClass({
     var auth_token = this.props.auth_token;
 
     return (
-      <div>
+      <div className="container">
+        <Navbar />
         <LayoutList />
       </div>
     );

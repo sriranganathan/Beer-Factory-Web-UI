@@ -22,6 +22,8 @@ var MenuElement = React.createClass({
     if (space === undefined) {
       if (index === 'finalizeSupply') {
         return <FinalizeSupply />;
+      } else {
+        return false;
       }
     }
 
