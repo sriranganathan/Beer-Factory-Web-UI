@@ -12,6 +12,7 @@ var {showLoading, hideLoading, startAPICall, finishAPICall} = require('Actions')
 var EmptySpace = require('EmptySpace');
 var Warehouse = require('Warehouse');
 var FinalizeSupply = require('FinalizeSupply');
+var Notifications = require('Notifications');
 
 var MenuElement = React.createClass({
 
@@ -22,6 +23,8 @@ var MenuElement = React.createClass({
     if (space === undefined) {
       if (index === 'finalizeSupply') {
         return <FinalizeSupply />;
+      } else if (index === 'notifications') {
+        return <Notifications />
       } else {
         return false;
       }

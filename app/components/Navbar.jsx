@@ -1,12 +1,19 @@
 var React = require('react');
 var {connect} = require('react-redux');
 var {initiateReset, convertHrtoDays} = require('helpers');
+var {showMenu, setCurrentIndex} = require('Actions');
 
 var navbar = React.createClass({
 
     handleLogout: function () {
       var {dispatch} = this.props;
       initiateReset(dispatch);
+    },
+
+    handleNotifications: function () {
+        var {dispatch} = this.props;
+        dispatch(setCurrentIndex('notifications'));
+        dispatch(showMenu());
     },
 
     render: function () {
@@ -23,6 +30,7 @@ var navbar = React.createClass({
                     <li><p>Bal - ₹ {factory.money}</p></li>
                     <li><p>Score - {factory.user_score}</p></li>
                     <li><p>Day {day}, hr {hr}</p></li>
+                    <li className="hoverable" onClick={this.handleNotifications}><p>Notifications</p></li>
                     <li className="hoverable" onClick={this.handleLogout}><p>Logout</p></li>
                   </ul>
                 </div>

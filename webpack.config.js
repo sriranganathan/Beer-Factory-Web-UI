@@ -6,25 +6,25 @@ module.exports = {
   ],
   plugins: [
     // Uncomment in production
-    // new webpack.optimize.UglifyJsPlugin({
-    //   beautify: false,
-    //   comments: false,
-    //   compress: {
-    //     warnings: false,
-    //     drop_console: false //change to True in Production
-    //   },
-    //   mangle: {
-    //     excrpt : ['$'],
-    //     screw_ie8 : true,
-    //     keep_fnames: true
-    //   }
-    // }),
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.DefinePlugin({
-    //     'process.env': {
-    //         'NODE_ENV': JSON.stringify('production')
-    //     }
-    // })
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_console: false //change to True in Production
+      },
+      mangle: {
+        excrpt : ['$'],
+        screw_ie8 : true,
+        keep_fnames: true
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+        'process.env': {
+            'NODE_ENV': JSON.stringify('production')
+        }
+    })
   ],
   output: {
     path: __dirname,
@@ -57,6 +57,7 @@ module.exports = {
       MenuElement: 'app/components/MenuElement.jsx',
       MenuStyles: 'app/styles/menu.js',
       Navbar: 'app/components/Navbar.jsx',
+      Notifications: 'app/components/MenuComponents/Notifications.jsx',
       Order: 'app/components/GameActions/Order.jsx',
       PendingOrderElement: 'app/components/MenuComponents/PendingOrderElement.jsx',
       Popularity: 'app/components/MenuComponents/Popularity.jsx',
