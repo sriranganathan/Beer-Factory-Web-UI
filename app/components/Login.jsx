@@ -6,6 +6,18 @@ var { Colors, Button, Row, Column, Alignments, Callout } = require('react-founda
 
 var Login = React.createClass({
 
+    launchIntoFullscreen: function (element) {
+      if(element.requestFullscreen) {
+          element.requestFullscreen();
+      } else if(element.mozRequestFullScreen) {
+          element.mozRequestFullScreen();
+      } else if(element.webkitRequestFullscreen) {
+          element.webkitRequestFullscreen();
+      } else if(element.msRequestFullscreen) {
+          element.msRequestFullscreen();
+      }
+    },
+
   handleSubmit : function (e) {
     e.preventDefault();
 
@@ -21,7 +33,7 @@ var Login = React.createClass({
     password = password.value;
 
     var success = (data) => {
-      var {dispatch} = this.props
+      var {dispatch} = this.props;
       dispatch(setUserCredentials(data.user_id, data.auth_token));
     };
 
@@ -38,6 +50,7 @@ var Login = React.createClass({
     }
 
     API.request('/login', data).then(success, failure);
+    this.launchIntoFullscreen(document.documentElement);
 
   },
 
