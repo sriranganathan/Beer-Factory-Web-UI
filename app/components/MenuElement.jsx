@@ -13,6 +13,7 @@ var EmptySpace = require('EmptySpace');
 var Warehouse = require('Warehouse');
 var FinalizeSupply = require('FinalizeSupply');
 var Notifications = require('Notifications');
+var PendingActions = require('PendingActions');
 
 var MenuElement = React.createClass({
 
@@ -24,7 +25,9 @@ var MenuElement = React.createClass({
       if (index === 'finalizeSupply') {
         return <FinalizeSupply />;
       } else if (index === 'notifications') {
-        return <Notifications />
+        return <Notifications />;
+      } else if (index === 'pending') {
+        return <PendingActions />;
       } else {
         return false;
       }

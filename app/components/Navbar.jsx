@@ -16,6 +16,12 @@ var navbar = React.createClass({
         dispatch(showMenu());
     },
 
+    handlePendingActions: function () {
+        var {dispatch} = this.props;
+        dispatch(setCurrentIndex('pending'));
+        dispatch(showMenu());
+    },
+
     render: function () {
         var {factory, hr} = this.props;
         var {day, hr} = convertHrtoDays(hr);
@@ -31,6 +37,7 @@ var navbar = React.createClass({
                     <li><p>Score - {factory.user_score}</p></li>
                     <li><p>Day {day}, hr {hr}</p></li>
                     <li className="hoverable" onClick={this.handleNotifications}><p>Notifications</p></li>
+                    <li className="hoverable" onClick={this.handlePendingActions}><p>Pending</p></li>
                     <li className="hoverable" onClick={this.handleLogout}><p>Logout</p></li>
                   </ul>
                 </div>
