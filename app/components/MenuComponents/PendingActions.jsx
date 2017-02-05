@@ -2,6 +2,7 @@ var React = require('react');
 var {connect} = require('react-redux');
 var {Button, ButtonGroup, Link, Colors, Sizes} = require('react-foundation');
 var {convertHrtoDays} = require('helpers');
+var PendingOrderElement = require('PendingOrderElement');
 
 var Notifications = React.createClass({
 
@@ -23,6 +24,14 @@ var Notifications = React.createClass({
                 current
             });
         };
+    },
+
+    generatePendingOrderElement: function (element, index) {
+        return <PendingOrderElement
+                key={index}
+                start={element.start_hr}
+                end={element.end_hr}
+                qty={element.qty} />;
     },
 
     getDisplayContent: function () {
@@ -47,6 +56,25 @@ var Notifications = React.createClass({
                     </div>
                 );
             }
+        } else if (current === 'order') {
+            var {pendingOrders} = this.props;
+            if(Object.keys(pendingOrders).length === 0)
+                return (
+                    <center>
+                        <p>No Pending Orders</p>
+                    </center>
+                );
+
+            var result = [], index=0;
+            for(var k in pendingOrders) {
+                var cur = pendingOrders[k];
+                for(var i in cur) {
+                    result.push(this.generatePendingOrderElement(cur[i], index));
+                    index++;
+                }
+            }
+
+            return result;
         } else {
             return current;
         }
@@ -66,7 +94,7 @@ var Notifications = React.createClass({
                       </ButtonGroup>
                     </div>
                 </center>
-                <div id="scrollable">
+                <div id="scrollable" className="minified">
                     {this.getDisplayContent()}
                 </div>
             </div>
@@ -84,6 +112,7 @@ module.exports = connect(
         pendingUpgrade: state.gameDetails.pendingUpgrades,
         factory: state.factory,
         upgrades: state.gameDetails.upgrades,
+        pendingOrders: state.gameDetails.pendingOrders
     };
   }
 )(Notifications);
