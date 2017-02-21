@@ -8,6 +8,18 @@ html, body, #app, .container {
   margin: 0px;
 }
 
+html, body {
+  background: black !important;
+  overflow: hidden;
+}
+
+#app {
+  position: absolute;
+  z-index: 0;
+  top:0;
+  left:0;
+}
+
 input {
   box-shadow: none !important;
 }
@@ -78,8 +90,8 @@ select {
 
 #navbar {
   height: 45px;
-  background-color: #333;
-  color: #ffa700;
+  background-color: #263238;
+  color: #ffab00;
   padding-top: 0rem;
   padding-bottom: 0px;
   padding-right: 0px;
@@ -88,8 +100,8 @@ select {
 }
 
 .menu > li {
-  background: #333;
-  border-left: 1px solid #41525e;
+  background: #263238;
+  border-left: 1px solid #455a64;
 }
 
 .menu > .hoverable {
@@ -97,7 +109,7 @@ select {
 }
 
 .menu > .hoverable:hover {
-  background: #41525e;
+  background: #455a64;
 }
 
 .menu p {

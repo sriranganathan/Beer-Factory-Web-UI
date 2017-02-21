@@ -40,7 +40,7 @@ var Login = React.createClass({
     var failure = (error) => {
       this.refs.err_msg.innerHTML = "Error : <i><b>" + error.message + "</i></b>";
 
-      submit.className = "button primary expanded hollow";
+      submit.className = "button primary expanded";
       submit.value = "Start Playing";
     };
 
@@ -56,7 +56,7 @@ var Login = React.createClass({
 
   render : function () {
     return (
-      <Column medium={6} large={4} offsetOnMedium={3} offsetOnLarge={4}>
+      <Column className="container" id="container">
         <Callout className="login__div">
           <p className="lead login__title">Beer Factory - Login</p>
           <Row>
@@ -67,17 +67,17 @@ var Login = React.createClass({
           <form onSubmit={this.handleSubmit}>
             <Row>
               <Column>
-                <input id="email" type="email" ref="email" placeholder="Email" required/>
+                <input className="linput" id="email" type="email" ref="email" placeholder="Email" required/>
               </Column>
             </Row>
             <Row>
               <Column>
-                <input id="password" type="password" ref="password" placeholder="Password" required/>
+                <input className="linput" id="password" type="password" ref="password" placeholder="Password" required/>
               </Column>
             </Row>
             <Row>
               <Column small={8} offsetOnSmall={2}>
-                <input type="submit" className="hollow button primary expanded" ref="submit" value="Start Playing"/>
+                <input type="submit" className="button primary expanded" ref="submit" value="Start Playing"/>
               </Column>
             </Row>
           </form>

@@ -1,7 +1,7 @@
 var React = require('react');
 var {connect} = require('react-redux');
 var {Column, Button} = require('react-foundation');
-var {convertHrtoDays, CreateSupplyProgress} = require('helpers');
+var {convertHrtoDays, CreateSupplyProgress, TransportTime} = require('helpers');
 var {hideMenu, showMenu, setCurrentIndex, setSupplyProgress} = require('Actions');
 var Supply = React.createClass({
 
@@ -60,7 +60,7 @@ var Supply = React.createClass({
         var supply = Math.floor(qty.value);
     
         // Check for invalid input    
-        if(supply === NaN) {
+        if(Number.isNaN(supply)) {
             this.refs.err_msg.innerHTML = "*Enter a valid Number";
             return false;
         } 
@@ -117,19 +117,54 @@ var Supply = React.createClass({
         return false;
     },
 
+    findSpace: function (LayoutSpaces, space_id) {
+            space_id = Math.floor(space_id);
+            for(var k in LayoutSpaces) {
+                if (LayoutSpaces[k].space_id === space_id)
+                    return LayoutSpaces[k];
+            }
+            return false;
+    },
+
     generateRetailerContent: function () {
-        var {demands, supplyProgress} = this.props;
+        var {demands, supplyProgress, costs, current_hr, LayoutSpaces} = this.props;
+        var current_index = this.props.index;
         var {selected} = this.state;
 
         var generateRetailerElement = (demand, index) => {
             var {day, hr} = convertHrtoDays(demand.end_hr);
             var allocated = this.getAllocatedSupply(supplyProgress, selected);
+ 
+            var space1 = LayoutSpaces[current_index];
+            var space2 = this.findSpace(LayoutSpaces, selected);
+            var x1 = space1.loc_x;
+            var y1 = space1.loc_y;
+            var x2 = space2.loc_x;
+            var y2 = space2.loc_y;
+
+            var NORMAL_TRANSPORT_TIME = 0.5;
+
+            var transport_time =  TransportTime(x1, y1, x2, y2, NORMAL_TRANSPORT_TIME);
+            var time = current_hr + transport_time;
+
+            if(demand.end_hr < time) {
+                return (
+                    <div key={index}>
+                        <p style={{marginBottom:"0.5rem", marginTop:"0.5rem"}}>Demand Expiry: Day {day}, Hr {hr}</p>
+                        <p>Transport Time : {transport_time} hrs </p>
+                        <center><p className="login__err-msg menu-messages">The Transport Time Exceedes the demand Expiry</p></center>
+                    </div>
+                );
+            }
+
+            var tr = convertHrtoDays(time);
 
             return (
                 <div key={index}>
                     <p>Demand Qty: {demand.demand_qty}</p>
                     <p>Supplied Qty: {demand.supplied_qty}</p>
                     <p>Allocated Supply: {allocated}</p>
+                    <p>Supply Reaches: Day {tr.day}, Hr {tr.hr}</p> 
                     <p>Demand Expiry: Day {day}, Hr {hr}</p>
                     <form className="no-margin-top" onSubmit={this.handleSubmit}>
                         <Column small={12} medium={8} className="stacked-horizontally">
@@ -149,14 +184,28 @@ var Supply = React.createClass({
     },
 
     generateWarehouseConentent: function () {
-        var {warehouses, supplyProgress} = this.props;
+        var {warehouses, supplyProgress, LayoutSpaces, current_hr} = this.props;
+        var current_index = this.props.index;        
         var {selected} = this.state;
         var allocated = this.getNetSupply(supplyProgress, selected);
+
+        var space1 = LayoutSpaces[current_index];
+        var space2 = this.findSpace(LayoutSpaces, selected);
+        var x1 = space1.loc_x;
+        var y1 = space1.loc_y;
+        var x2 = space2.loc_x;
+        var y2 = space2.loc_y;
+
+        var NORMAL_TRANSPORT_TIME = 0.5;
+
+        var transport_time =  TransportTime(x1, y1, x2, y2, NORMAL_TRANSPORT_TIME);
+        var tr = convertHrtoDays(transport_time+current_hr);
         var stock = warehouses[selected].stock;
         return (
             <div>
                 <p>Existing Stock: {stock}</p>
                 <p>Allocated Supply: {allocated}</p>
+                <p>Supply Reaches: Day {tr.day}, Hr {tr.hr}</p> 
                 <form className="no-margin-top" onSubmit={this.handleSubmit}>
                     <Column small={12} medium={8} className="stacked-horizontally">
                         <input type="number" ref="qty" placeholder="Enter Qty" className="no-margin-bottom" required/>
@@ -226,7 +275,7 @@ var Supply = React.createClass({
                 </div>
             );
         } else {
-            var {warehouses, names, index, LayoutSpaces} = this.props;
+            var {warehouses, names, index, LayoutSpaces, current_hr} = this.props;
             var space_id = LayoutSpaces[index].space_id;
 
             var generateRetailerList = function(space_id) {
@@ -240,7 +289,7 @@ var Supply = React.createClass({
 
             var list = [];
             for(var k in warehouses) {
-                if (k == space_id)
+                if (k == space_id || warehouses[k].active_from > current_hr)
                     continue;
                 list.push(generateRetailerList(k));
             }
@@ -325,6 +374,7 @@ module.exports = connect(
             warehouses: state.warehouses,
             supplyProgress: state.supplyProgress,
             APIprogress: state.progress.API,
+            current_hr: state.userDetails.hr
         };
     }
 )(Supply);

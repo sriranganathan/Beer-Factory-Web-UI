@@ -1,12 +1,13 @@
 $primary-color: #1779ba;
 $medium-gray: #cacaca;
 $alert-color: #cc4b37;
+$title-color: white;
 
 .login {
   &__title {
     text-align: center;
     font-size: rem-calc(25);
-    color: $primary-color;
+    color: $title-color;
   }
 
   &__err-msg {
@@ -14,10 +15,51 @@ $alert-color: #cc4b37;
   }
 
   &__div {
-    margin-top: 150px;
     padding: 20px;
-    border-radius: 10px;
-    border-color: $medium-gray;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 25%;
   }
 
 }
+
+.linput:hover, .linput:focus, .linput:active {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid $title-color;
+}
+
+.linput {
+  transition: none;
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-bottom: 1px solid $title-color;;
+}
+
+#password {
+  margin-bottom: 50px;
+}
+
+@media screen and (min-width: 320px) {
+  .login__div {
+    left:0%;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .login__div {
+    left:25%;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .login__div {
+    left:33%;
+    width: 33%;
+  }
+}
+

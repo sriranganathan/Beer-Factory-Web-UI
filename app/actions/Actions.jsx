@@ -140,6 +140,13 @@ export var addPendingOrder = (order) => {
   };
 };
 
+export var addPendingSupplies = (supplies) => {
+  return {
+    type: 'ADD_PENDING_SUPPLIES',
+    supplies
+  };
+};
+
 export var setNames = (names) => {
   return {
     type: 'SET_NAMES',

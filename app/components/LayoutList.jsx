@@ -9,7 +9,7 @@ var {initiateReset} = require('helpers');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {transformCostTypes, transformActions, transformUpgrades,
-     transformPendingOrders, generateNames} = require('helpers');
+     transformPendingOrders, generateNames, transformPendingWarehouses, transformPendingSupplies} = require('helpers');
 var LayoutList = React.createClass({
 
   fetchLayoutSpaces: function () {
@@ -18,8 +18,8 @@ var LayoutList = React.createClass({
 
       var pending = data.pending_actions;
       var pendingOrders = transformPendingOrders(pending.factory_orders || []);
-      var pendingSupplies = pending.supplies || [];
-      var pendingWarehouses = pending.new_warehouses || [];
+      var pendingSupplies = transformPendingSupplies(pending.supplies || []);
+      var pendingWarehouses = transformPendingWarehouses(pending.new_warehouses || []);
       var pendingUpgrades = pending.upgrade || null;
 
       if (pendingUpgrades !== null)

@@ -21,7 +21,7 @@ var Order = React.createClass({
         var qty = Math.floor(this.refs.qty.value);
         this.refs.err_msg.innerHTML = "";
         this.refs.info_msg.innerHTML = "";
-        if(qty === NaN || qty < 0)
+        if(Number.isNaN(qty) || qty < 0)
             this.refs.info_msg.innerHTML = "Invalid order Qty";
         else {
              var {costTypes} = this.props;
@@ -53,7 +53,7 @@ var Order = React.createClass({
         var order = Math.floor(qty.value);
     
         // Check for invalid input    
-        if(order === NaN) {
+        if(Number.isNaN(order)) {
             this.refs.err_msg.innerHTML = "*Enter a valid Number";
             return false;
         } 

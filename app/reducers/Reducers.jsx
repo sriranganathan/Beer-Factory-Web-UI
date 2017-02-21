@@ -108,7 +108,33 @@ var addPendingOrder = (state, order) => {
     pendingOrders
   });
 
-}
+};
+
+var addPendingSupplies = (state, supplies) => {
+
+  var pendingSupplies = state.pendingSupplies;
+
+  for (var k in supplies) {
+    var supply = supplies[k];
+    var end_hr = supply.supply_end;
+    if (pendingSupplies[end_hr] === undefined) {
+      pendingSupplies = {
+        ...pendingSupplies,
+        [end_hr]: [supply]
+      };
+    } else {
+      pendingSupplies = {
+        ...pendingSupplies,
+        [end_hr]: [...pendingSupplies[end_hr], supply]
+      };
+    }
+  }
+
+  return updateGameStorage({
+    ...state,
+    pendingSupplies
+  });
+};
 
 export var GameDetailsReducer = (state = defaultGameState, action) => {
   switch (action.type) {
@@ -121,6 +147,8 @@ export var GameDetailsReducer = (state = defaultGameState, action) => {
       return removeExpiredPendingActions(state, action.current_hr);
     case 'ADD_PENDING_ORDER':
       return addPendingOrder(state, action.order);
+    case 'ADD_PENDING_SUPPLIES':
+      return addPendingSupplies(state, action.supplies);
     case 'SET_GAME_STATE':
       var {type, ...rest} = action;
       return updateGameStorage({

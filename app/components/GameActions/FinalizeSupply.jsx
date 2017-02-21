@@ -4,8 +4,8 @@ var {Callout, Button, Column, Link, Sizes, Colors} = require('react-foundation')
 var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
-var {initiateReset} = require('helpers');
-var {showLoading, hideLoading, startAPICall, finishAPICall, hideMenu, setSupplyProgress} = require('Actions');
+var {initiateReset, TransportTime, transformPendingSupplies} = require('helpers');
+var {showLoading, hideLoading, startAPICall, finishAPICall, hideMenu, setSupplyProgress, addPendingSupplies} = require('Actions');
 
 var FinalizeSupply = React.createClass({
 
@@ -37,6 +37,51 @@ var FinalizeSupply = React.createClass({
         var success = (data) => {
             dispatch(finishAPICall());
             dispatch(hideMenu());
+
+            var {current_hr, LayoutSpaces} = this.props;
+            var transformSupplies = (supplyProgress) => {
+                var result = [];
+
+                var calculateTime = (supply) => {
+
+                    var findSpace =  (LayoutSpaces, space_id) => {
+                        space_id = Math.floor(space_id);
+                        for(var k in LayoutSpaces) {
+                            if (LayoutSpaces[k].space_id === space_id)
+                                return LayoutSpaces[k];
+                        }
+                        return false;
+                    };
+
+                    var space1 = findSpace(LayoutSpaces, supply.source_space_id);
+                    var space2 = findSpace(LayoutSpaces, supply.destination_space_id);
+                    
+                    var x1 = space1.loc_x;
+                    var y1 = space1.loc_y;
+                    var x2 = space2.loc_x;
+                    var y2 = space2.loc_y;
+
+                    var NORMAL_TRANSPORT_TIME = 0.5;
+                    var transport_time =  TransportTime(x1, y1, x2, y2, NORMAL_TRANSPORT_TIME);
+
+                    return current_hr + transport_time;
+                }
+
+                var createSupplyElement = (supply) => {
+                    result.push({
+                        source_space: supply.source_space_id,
+                        dest_space: supply.destination_space_id,
+                        supply_qty: supply.quantity,
+                        supply_end: calculateTime(supply)
+                    });
+                };
+
+                supplyProgress.forEach(createSupplyElement);
+                return result;
+            };
+
+            var pendingSupplies = transformSupplies(supplyProgress);
+            dispatch(addPendingSupplies(pendingSupplies));
 
             //submit.value = "Make Supplies";
 
@@ -147,7 +192,9 @@ module.exports = connect(
             user_id: state.userDetails.user_id,
             auth_token: state.userDetails.auth_token,
             supplyProgress: state.supplyProgress,
-            names: state.names
+            names: state.names,
+            current_hr: state.userDetails.hr,
+            LayoutSpaces: state.layoutDetails.LayoutSpaces
         };
     }
 )(FinalizeSupply);

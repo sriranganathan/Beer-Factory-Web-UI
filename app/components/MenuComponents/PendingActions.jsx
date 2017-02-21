@@ -3,6 +3,7 @@ var {connect} = require('react-redux');
 var {Button, ButtonGroup, Link, Colors, Sizes} = require('react-foundation');
 var {convertHrtoDays} = require('helpers');
 var PendingOrderElement = require('PendingOrderElement');
+var PendingSupplyElement = require('PendingSupplyElement');
 
 var Notifications = React.createClass({
 
@@ -32,6 +33,26 @@ var Notifications = React.createClass({
                 start={element.start_hr}
                 end={element.end_hr}
                 qty={element.qty} />;
+    },
+
+    generateName: function (space_id) {
+        var elem_name = this.props.names[space_id];
+        var elem_suffix = "Retailer ";
+
+        if(Math.floor(elem_name))
+            elem_suffix = "Warehouse ";
+
+        return elem_suffix + elem_name;
+    },
+
+    generatePendingSupplyElement: function (element, index) {
+        return <PendingSupplyElement
+                key={index} 
+                end={element.supply_end}
+                qty={element.supply_qty}
+                source={this.generateName(element.source_space)}
+                dest={this.generateName(element.dest_space)}
+                />
     },
 
     getDisplayContent: function () {
@@ -76,7 +97,24 @@ var Notifications = React.createClass({
 
             return result;
         } else {
-            return current;
+            var {pendingSupplies} = this.props;
+            if(Object.keys(pendingSupplies).length === 0)
+                return (
+                    <center>
+                        <p>No Pending Supplies</p>
+                    </center>
+                );
+
+            var result = [], index=0;
+            for(var k in pendingSupplies) {
+                var cur = pendingSupplies[k];
+                for(var i in cur) {
+                    result.push(this.generatePendingSupplyElement(cur[i], index));
+                    index++;
+                }
+            }
+
+            return result;            
         }
     },
 
@@ -112,7 +150,9 @@ module.exports = connect(
         pendingUpgrade: state.gameDetails.pendingUpgrades,
         factory: state.factory,
         upgrades: state.gameDetails.upgrades,
-        pendingOrders: state.gameDetails.pendingOrders
+        pendingOrders: state.gameDetails.pendingOrders,
+        pendingSupplies: state.gameDetails.pendingSupplies,
+        names: state.names
     };
   }
 )(Notifications);

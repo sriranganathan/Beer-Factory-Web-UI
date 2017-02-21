@@ -5,6 +5,7 @@ export var initiateReset = function (dispatch) {
     dispatch(setUserCredentials(null, null));
     localStorage.removeItem('gameDetails');
     localStorage.removeItem('gameDetailsHash');
+    setTimeout(initiateBubbles, 100);
 };
 
 export var transformWarehouses = (warehouses) => {
@@ -167,5 +168,57 @@ export var CreateSupplyProgress = (existing, supply) => {
         new_supply.push(supply);
 
     return new_supply;
+
+};
+
+var CalcDistance = (x1, y1, x2, y2) => {
+    return Math.abs(x1-x2) + Math.abs(y1-y2);
+};
+
+export var TransportTime = (x1, y1, x2, y2, time_per_unit_distance) => {
+    var distance = CalcDistance(x1, y1, x2, y2);
+    return Math.ceil(distance * time_per_unit_distance);
+};
+
+export var transformPendingWarehouses = (warehouses) => {
+
+    var result = {};
+
+    var transformation = (warehouse) => {
+        var end_hr = warehouse.active_from;
+        
+        if(result[end_hr] === undefined)
+            result[end_hr] = []
+
+        result[end_hr].push(warehouse)
+
+    };
+
+    warehouses.forEach(transformation);
+    return result;
+
+};
+
+export var transformPendingSupplies = (supplies) => {
+
+    var result = {};
+
+    var transformation = (supply) => {
+        var end_hr = supply.supply_end;
+        
+        if(result[end_hr] === undefined)
+            result[end_hr] = []
+
+        result[end_hr].push({
+            source_space: supply.source_space,
+            dest_space: supply.dest_space,
+            supply_qty: supply.supply_qty,
+            supply_end: supply.supply_end
+        });
+
+    };
+
+    supplies.forEach(transformation);
+    return result;
 
 };

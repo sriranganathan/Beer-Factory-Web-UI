@@ -11,6 +11,13 @@ var LayoutElement = React.createClass({
       return 'Road';
 
     var basic_classes = "LayoutSpace";
+
+    if (space.description === 'EMPTY' && !this.props.warehouses[space.space_id] && !this.props.opponentWarehouses[space.space_id]) {
+      basic_classes += " EMPTY";
+      if (space.activation_hr > this.props.hr)
+        basic_classes += "-LOCKED";
+    }
+
     if (space.activation_hr <= this.props.hr) 
       return basic_classes + " LayoutSpace-active";
     else 
@@ -35,9 +42,32 @@ var LayoutElement = React.createClass({
 
   createContentBlock: function (space) {
     if(space.description !== 'ROAD') {
+
+      var getImageLoc = (desc) => {
+        var baseLoc = "../images/";
+        switch (desc) {
+          case 'USER FACTORY':
+            return baseLoc + 'factory.png';
+          case 'RETAILER':
+            var i = Math.floor((Math.random() * 2) + 1);
+            return baseLoc + 'retailer' + i + '.png';
+          case 'OPPONENT FACTORY':
+            return baseLoc + 'opponent.png';
+          default:
+            return '';
+        }
+      }
+
+      var generateImage = (space) => {
+        var images = ['USER FACTORY', 'RETAILER', 'OPPONENT FACTORY'];
+        if (images.includes(space.description))
+          return <img className="layout-space-img" src={getImageLoc(space.description)} />;
+        return false;
+      }
+
       return (
         <div className="layout-content container">
-          <center><p>{this.generateContent(space)}</p></center>
+          {generateImage(space)}
           {this.generateBadge(space)}
         </div>
       );
@@ -45,6 +75,8 @@ var LayoutElement = React.createClass({
   },
 
   generateContent: function (space) {
+
+    return '';
 
     if(space.description === 'ROAD')
       return '';

@@ -61,6 +61,7 @@ module.exports = {
       Order: 'app/components/GameActions/Order.jsx',
       PendingActions: 'app/components/MenuComponents/PendingActions.jsx',
       PendingOrderElement: 'app/components/MenuComponents/PendingOrderElement.jsx',
+      PendingSupplyElement: 'app/components/MenuComponents/PendingSupplyElement.jsx',
       Popularity: 'app/components/MenuComponents/Popularity.jsx',
       Reducers: 'app/reducers/Reducers.jsx',
       Reset: 'app/components/Reset.jsx',
