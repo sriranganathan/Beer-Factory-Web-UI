@@ -2,7 +2,7 @@ var React = require('react');
 var {Callout, Colors, Row} = require('react-foundation');
 var {convertHrtoDays} = require('helpers');
 
-var PendingOrderElement = React.createClass({
+var PendingSupplyElement = React.createClass({
 
   render: function () {
     var {end, qty, source, dest} = this.props;
@@ -22,4 +22,4 @@ var PendingOrderElement = React.createClass({
 
 });
 
-module.exports = PendingOrderElement;
+module.exports = PendingSupplyElement;

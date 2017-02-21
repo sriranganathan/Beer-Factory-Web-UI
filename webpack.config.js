@@ -6,25 +6,25 @@ module.exports = {
   ],
   plugins: [
     // Uncomment in production
-    // new webpack.optimize.UglifyJsPlugin({
-    //   beautify: false,
-    //   comments: false,
-    //   compress: {
-    //     warnings: false,
-    //     drop_console: false //change to True in Production
-    //   },
-    //   mangle: {
-    //     excrpt : ['$'],
-    //     screw_ie8 : true,
-    //     keep_fnames: true
-    //   }
-    // }),
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.DefinePlugin({
-    //     'process.env': {
-    //         'NODE_ENV': JSON.stringify('production')
-    //     }
-    // })
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      comments: false,
+      compress: {
+        warnings: false,
+        drop_console: false //change to True in Production
+      },
+      mangle: {
+        excrpt : ['$'],
+        screw_ie8 : true,
+        keep_fnames: true
+      }
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+        'process.env': {
+            'NODE_ENV': JSON.stringify('production')
+        }
+    })
   ],
   output: {
     path: __dirname,
@@ -69,7 +69,9 @@ module.exports = {
       Router: 'app/Router.jsx',
       SideBar: 'app/components/SideBar.jsx',
       Supply: 'app/components/GameActions/Supply.jsx',
+      Stock: 'app/components/MenuComponents/Stock.jsx',
       Toastr: 'app/components/Toastr.jsx',
+      TotalDemands: 'app/components/MenuComponents/TotalDemands.jsx',
       Upgrade: 'app/components/GameActions/Upgrade.jsx',
       UserFactory: 'app/components/MenuComponents/UserFactory.jsx',
       Warehouse: 'app/components/MenuComponents/Warehouse.jsx'

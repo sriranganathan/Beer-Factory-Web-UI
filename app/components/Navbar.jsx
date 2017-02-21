@@ -22,6 +22,18 @@ var navbar = React.createClass({
         dispatch(showMenu());
     },
 
+    handleDemands: function () {
+        var {dispatch} = this.props;
+        dispatch(setCurrentIndex('demands'));
+        dispatch(showMenu());
+    },
+
+    handleStock: function () {
+        var {dispatch} = this.props;
+        dispatch(setCurrentIndex('stock'));
+        dispatch(showMenu());
+    },
+
     render: function () {
         var {factory, hr} = this.props;
         var {day, hr} = convertHrtoDays(hr);
@@ -37,6 +49,8 @@ var navbar = React.createClass({
                     <li><p>Score - {factory.user_score}</p></li>
                     <li><p>Day {day}, hr {hr}</p></li>
                     <li className="hoverable" onClick={this.handleNotifications}><p>Notifications</p></li>
+                    <li className="hoverable" onClick={this.handleDemands}><p>Demands</p></li>
+                    <li className="hoverable" onClick={this.handleStock}><p>Stock</p></li>
                     <li className="hoverable" onClick={this.handlePendingActions}><p>Pending</p></li>
                     <li className="hoverable" onClick={this.handleLogout}><p>Logout</p></li>
                   </ul>

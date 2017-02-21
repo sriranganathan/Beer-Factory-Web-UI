@@ -14,6 +14,8 @@ var Warehouse = require('Warehouse');
 var FinalizeSupply = require('FinalizeSupply');
 var Notifications = require('Notifications');
 var PendingActions = require('PendingActions');
+var TotalDemands = require('TotalDemands');
+var Stock = require('Stock');
 
 var MenuElement = React.createClass({
 
@@ -28,6 +30,10 @@ var MenuElement = React.createClass({
         return <Notifications />;
       } else if (index === 'pending') {
         return <PendingActions />;
+      } else if (index === 'demands') {
+        return <TotalDemands />;
+      } else if (index === 'stock') {
+        return <Stock />;
       } else {
         return false;
       }
