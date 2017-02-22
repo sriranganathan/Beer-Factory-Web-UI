@@ -222,3 +222,18 @@ export var transformPendingSupplies = (supplies) => {
     return result;
 
 };
+
+export var transformPopularity = (popularities) => {
+    var result = {};
+
+    var transformation = (popularity) => {
+        result[popularity.rid] = {
+            user: popularity.user,
+            opponent: popularity.opponent
+        }
+    };
+
+    popularities.forEach(transformation);
+    return result;
+
+}
