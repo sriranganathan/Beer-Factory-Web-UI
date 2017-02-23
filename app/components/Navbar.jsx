@@ -5,6 +5,10 @@ var {showMenu, setCurrentIndex} = require('Actions');
 
 var navbar = React.createClass({
 
+    handleScore: function () {
+      window.location = '#/leaderboard';
+    },
+
     handleLogout: function () {
       var {dispatch} = this.props;
       initiateReset(dispatch);
@@ -46,8 +50,8 @@ var navbar = React.createClass({
                 <div className="top-bar-right">
                   <ul className="menu">
                     <li><p>Bal - ₹ {factory.money}</p></li>
-                    <li><p>Score - {factory.user_score}</p></li>
                     <li><p>Day {day}, hr {hr}</p></li>
+                    <li className="hoverable" onClick={this.handleScore}><p>Score - {factory.user_score}</p></li>
                     <li className="hoverable" onClick={this.handleNotifications}><p>Notifications</p></li>
                     <li className="hoverable" onClick={this.handleDemands}><p>Demands</p></li>
                     <li className="hoverable" onClick={this.handleStock}><p>Stock</p></li>

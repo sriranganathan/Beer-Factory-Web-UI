@@ -5,7 +5,6 @@ export var initiateReset = function (dispatch) {
     dispatch(setUserCredentials(null, null));
     localStorage.removeItem('gameDetails');
     localStorage.removeItem('gameDetailsHash');
-    setTimeout(initiateBubbles, 100);
 };
 
 export var transformWarehouses = (warehouses) => {
