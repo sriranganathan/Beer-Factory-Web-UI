@@ -95,7 +95,18 @@ var BuildWarehouse = React.createClass({
     },
 
     render: function () {
-        var {factory, costTypes, actions, currentHr} = this.props;
+        var {factory, costTypes, actions, currentHr, LayoutSpaces, index} = this.props;
+
+        var space = LayoutSpaces[index];
+        if(space.length < 2 || space.width < 2) {
+            return (
+                <center className="minified">
+                    <p>Cannot Build Warehouse</p>
+                    <p>Location too small</p>
+                </center>
+            );
+        }
+
         var requiredHrs = actions.BUILD_WAREHOUSE.req_hr;
         var {day, hr} = convertHrtoDays(currentHr + requiredHrs);
         var cost = costTypes.BUILD_WAREHOUSE_COST.unit_cost;
