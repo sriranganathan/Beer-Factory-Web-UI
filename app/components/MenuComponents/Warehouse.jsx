@@ -1,7 +1,8 @@
 var React = require('react');
 var {connect} = require('react-redux');
-var {convertHrtoDays} = require('helpers');
+var {convertHrtoDays, FindIfWarehouseExist} = require('helpers');
 var Supply = require('Supply');
+
 
 var Warehouse = React.createClass({
 
@@ -10,8 +11,18 @@ var Warehouse = React.createClass({
         var space_id = LayoutSpaces[index].space_id;
         var warehouse = warehouses[space_id];
         
-        if (warehouse === undefined)
-            return false;
+        if (warehouse === undefined) {
+            var {pendingWarehouses} = this.props;
+            var w = FindIfWarehouseExist(pendingWarehouses, space_id);
+            var {day, hr} = convertHrtoDays(w.active_from);
+
+            return (
+                <center>
+                    <h5>In Construction</h5>
+                    <div>Completes on Day {day}, Hr {hr}</div>
+                </center>  
+            );
+        }
 
         if (warehouse.active_from > hr) {
             var {day, hr} = convertHrtoDays(warehouse.active_from);
@@ -30,11 +41,16 @@ var Warehouse = React.createClass({
         var {names, index, LayoutSpaces} = this.props;
         var space = LayoutSpaces[index];
         var name = names[space.space_id];
+
+        if(name) {
+            name = "- " + name;
+        }
+
         return (
             <div>
-                <center><h3>Warehouse - {name}</h3></center>
+                <center><h3>Warehouse {name}</h3></center>
                 <hr />
-                <div id="scrollable">
+                <div id="scrollable" className="minified">
                     {this.generateContent()}
                 </div>
             </div>
@@ -50,7 +66,8 @@ module.exports = connect(
             LayoutSpaces: state.layoutDetails.LayoutSpaces,
             warehouses: state.warehouses,
             hr: state.userDetails.hr,
-            names: state.names
+            names: state.names,
+            pendingWarehouses: state.gameDetails.pendingWarehouses
         };
     }
 )(Warehouse);

@@ -4,7 +4,7 @@ var UserFactory = require('UserFactory');
 var Retailer = require('Retailer');
 var {Row, Column} = require('react-foundation');
 var Inactive = require('Inactive');
-var {initiateReset, convertHrtoDays} = require('helpers');
+var {initiateReset, convertHrtoDays, FindIfWarehouseExist} = require('helpers');
 var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
@@ -42,16 +42,22 @@ var MenuElement = React.createClass({
     if(space.activation_hr > hr)
       return <Inactive desc={space.description} activation_hr={space.activation_hr}/>
 
+    var {pendingWarehouses} = this.props;
     switch(space.description) {
+
+
       case 'EMPTY':
-        if(this.props.warehouses[space.space_id])
+        if(this.props.warehouses[space.space_id]
+            || !(FindIfWarehouseExist(pendingWarehouses ,space.space_id) === false))
           return <Warehouse />;
         else if(this.props.opponentWarehouses[space.space_id])
           return <center><h3>Opponent Warehouse</h3><hr /></center>;
         else
           return <EmptySpace />;
+
       case 'USER FACTORY':
         return <UserFactory />;
+
       case 'RETAILER':
         return <Retailer />;
       default:
@@ -149,7 +155,8 @@ module.exports = connect(
       auth_token: state.userDetails.auth_token,
       APIprogress: state.progress.API,
       warehouses: state.warehouses,
-      opponentWarehouses: state.opponentWarehouses
+      opponentWarehouses: state.opponentWarehouses,
+      pendingWarehouses: state.gameDetails.pendingWarehouses
     };
   }
 )(MenuElement);

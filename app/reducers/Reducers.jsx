@@ -136,6 +136,32 @@ var addPendingSupplies = (state, supplies) => {
   });
 };
 
+var addPendingWarehouse = (state, warehouse) => {
+
+  var pendingWarehouses = state.pendingWarehouses;
+  var start = warehouse.active_from;
+
+  if (pendingWarehouses[start] === undefined) {
+
+    pendingWarehouses = {
+      ...pendingWarehouses,
+      [start]: [warehouse]
+    }
+
+  } else {
+    pendingWarehouses = {
+      ...pendingWarehouses,
+      [start]: [...pendingWarehouses[start], warehouse]
+    }
+  }
+
+  return updateGameStorage({
+    ...state,
+    pendingWarehouses
+  })
+
+};
+
 export var GameDetailsReducer = (state = defaultGameState, action) => {
   switch (action.type) {
     case 'SET_UPGRADE_PROGRESS':
@@ -147,6 +173,8 @@ export var GameDetailsReducer = (state = defaultGameState, action) => {
       return removeExpiredPendingActions(state, action.current_hr);
     case 'ADD_PENDING_ORDER':
       return addPendingOrder(state, action.order);
+    case 'ADD_PENDING_WAREHOUSE':
+      return addPendingWarehouse(state, action.warehouse);
     case 'ADD_PENDING_SUPPLIES':
       return addPendingSupplies(state, action.supplies);
     case 'SET_GAME_STATE':

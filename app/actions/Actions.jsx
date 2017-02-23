@@ -160,3 +160,10 @@ export var setSupplyProgress = (supply) => {
     supply
   };
 };
+
+export var addPendingWarehouse = (warehouse) => {
+  return {
+    'type': 'ADD_PENDING_WAREHOUSE',
+    warehouse
+  };
+};

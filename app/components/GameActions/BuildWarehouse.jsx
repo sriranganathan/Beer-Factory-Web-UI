@@ -4,7 +4,8 @@ var API = require('API');
 var {toastr} = require('react-redux-toastr');
 var advanceTurn = require('advanceTurn');
 var {initiateReset, convertHrtoDays} = require('helpers');
-var {showLoading, hideLoading, setUpgradeProgress, startAPICall, finishAPICall} = require('Actions');
+var {showLoading, hideLoading, setUpgradeProgress, startAPICall,
+     finishAPICall, addPendingWarehouse} = require('Actions');
 
 var BuildWarehouse = React.createClass({
 
@@ -47,6 +48,14 @@ var BuildWarehouse = React.createClass({
         var success = (data) => {
             dispatch(finishAPICall());
             submit.value = "Build Warehouse";
+
+            var {actions, currentHr} = this.props;
+            var end = actions.BUILD_WAREHOUSE.req_hr + currentHr;
+
+            dispatch(addPendingWarehouse({
+                'active_from': end,
+                'ware_space': space.space_id
+            }));
 
             advanceTurn({user_id, auth_token}, dispatch);
             toastr.success('Success', 'Building Warehouse Started');

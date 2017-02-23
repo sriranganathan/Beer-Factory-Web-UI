@@ -236,4 +236,18 @@ export var transformPopularity = (popularities) => {
     popularities.forEach(transformation);
     return result;
 
-}
+};
+
+export var FindIfWarehouseExist = (pendingWarehouses, space_id) => {
+
+    for(var k in pendingWarehouses) {
+        var pendingWarehouse = pendingWarehouses[k];
+        for (var i in pendingWarehouse) {
+            var w = pendingWarehouse[i];
+            if (w.ware_space == space_id)
+                return w;
+        }
+    }
+
+    return false;    
+};
