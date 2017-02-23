@@ -15,9 +15,8 @@ var TotalDemands = React.createClass({
 
     generateDemandsList: function () {
         var demands = this.props.demands;
-
-        if(demands === undefined || demands.length === 0)
-            return <div>No current Demands</div>
+        if(demands === undefined || Object.keys(demands).length === 0)
+            return <center>No current Demands</center>
 
         var result = [];
 

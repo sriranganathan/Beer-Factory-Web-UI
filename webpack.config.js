@@ -6,25 +6,25 @@ module.exports = {
   ],
   plugins: [
     // Uncomment in production
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      comments: false,
-      compress: {
-        warnings: false,
-        drop_console: false //change to True in Production
-      },
-      mangle: {
-        excrpt : ['$'],
-        screw_ie8 : true,
-        keep_fnames: true
-      }
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.DefinePlugin({
-        'process.env': {
-            'NODE_ENV': JSON.stringify('production')
-        }
-    })
+    // new webpack.optimize.UglifyJsPlugin({
+    //   beautify: false,
+    //   comments: false,
+    //   compress: {
+    //     warnings: false,
+    //     drop_console: false //change to True in Production
+    //   },
+    //   mangle: {
+    //     excrpt : ['$'],
+    //     screw_ie8 : true,
+    //     keep_fnames: true
+    //   }
+    // }),
+    // new webpack.optimize.DedupePlugin(),
+    // new webpack.DefinePlugin({
+    //     'process.env': {
+    //         'NODE_ENV': JSON.stringify('production')
+    //     }
+    // })
   ],
   output: {
     path: __dirname,
@@ -51,6 +51,7 @@ module.exports = {
       Instruction: 'app/components/Instruction.jsx',
       LayoutElement: 'app/components/LayoutElement.jsx',
       LayoutList: 'app/components/LayoutList.jsx',
+      Leaderboard: 'app/components/Leaderboard.jsx',
       Loader: 'app/components/Loader.jsx',
       Login: 'app/components/Login.jsx',
       Main: 'app/components/Main.jsx',

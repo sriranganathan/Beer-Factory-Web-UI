@@ -4,12 +4,14 @@ var Main = require('Main');
 var BeerFactory = require('BeerFactory');
 var Instruction = require('Instruction');
 var Reset = require('Reset');
+var Leaderboard = require('Leaderboard');
 
 var Router = (
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
       <IndexRoute component={BeerFactory}/>
       <Route path="instructions" component={Instruction}/>
+      <Route path="leaderboard" component={Leaderboard}/>
       <Route path="reset" component={Reset}/>
     </Route>
   </Router>

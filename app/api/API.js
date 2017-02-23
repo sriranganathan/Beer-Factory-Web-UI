@@ -18,6 +18,8 @@ var request = function (API_URL, data, method="post") {
       return response.data.data;
     } else if (response.data.status_code === 401) {
       throw new Error(401);
+    } else if (response.data.status_code === 403) {
+      window.location = '#/leaderboard';
     } else {
       throw new Error(response.data.data);
     }

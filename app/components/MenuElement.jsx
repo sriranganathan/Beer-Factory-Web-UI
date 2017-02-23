@@ -42,7 +42,8 @@ var MenuElement = React.createClass({
     if(space.activation_hr > hr)
       return <Inactive desc={space.description} activation_hr={space.activation_hr}/>
 
-    var {pendingWarehouses} = this.props;
+    var {gameDetails} = this.props;
+    var pendingWarehouses = gameDetails.pendingWarehouses || {};
     switch(space.description) {
 
 
@@ -156,7 +157,7 @@ module.exports = connect(
       APIprogress: state.progress.API,
       warehouses: state.warehouses,
       opponentWarehouses: state.opponentWarehouses,
-      pendingWarehouses: state.gameDetails.pendingWarehouses
+      gameDetails: state.gameDetails
     };
   }
 )(MenuElement);
