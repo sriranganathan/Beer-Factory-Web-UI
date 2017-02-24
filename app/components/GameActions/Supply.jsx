@@ -178,7 +178,7 @@ var Supply = React.createClass({
                 </div>
             );
         }
-        if (demands[selected] === undefined)
+        if (demands[selected] !== undefined)
             return demands[selected].map(generateRetailerElement);
         else
             return false;

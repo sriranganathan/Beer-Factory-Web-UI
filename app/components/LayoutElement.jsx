@@ -53,6 +53,8 @@ var LayoutElement = React.createClass({
             return baseLoc + 'retailer' + i + '.png';
           case 'OPPONENT FACTORY':
             return baseLoc + 'opponent.png';
+          case 'WAREHOUSE':
+            return baseLoc + 'warehouse.png';
           default:
             return '';
         }
@@ -62,6 +64,14 @@ var LayoutElement = React.createClass({
         var images = ['USER FACTORY', 'RETAILER', 'OPPONENT FACTORY'];
         if (images.includes(space.description))
           return <img className="layout-space-img" src={getImageLoc(space.description)} />;
+
+        var {warehouses} = this.props;
+        for (var k in warehouses) {
+          if (warehouses[k].space__space_id === space.space_id) {
+            return <img className="layout-space-img" src={getImageLoc('WAREHOUSE')} />;
+          }
+        }
+
         return false;
       }
 
