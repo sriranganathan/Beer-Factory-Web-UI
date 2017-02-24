@@ -58,7 +58,10 @@ var Login = React.createClass({
     return (
       <Column className="container" id="container">
         <Callout className="login__div">
-          <p className="lead login__title">Beer Factory - Login</p>
+          <p className="lead login__title">Beer Factory Demo</p>
+          <center>
+            <p className="lead login__title">Main Event Starts Tomorrow</p>
+          </center>
           <Row>
             <Column>
               <p className="login__err-msg" ref="err_msg"></p>

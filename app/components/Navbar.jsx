@@ -44,7 +44,7 @@ var navbar = React.createClass({
         return (
            <div className="top-bar" id="navbar">
               <div className="top-bar-title">
-                <strong>Beer Factory</strong>
+                <strong>Beer Factory - DEMO</strong>
               </div>
               <div id="responsive-menu">
                 <div className="top-bar-right">
@@ -56,7 +56,7 @@ var navbar = React.createClass({
                     <li className="hoverable" onClick={this.handleDemands}><p>Demands</p></li>
                     <li className="hoverable" onClick={this.handleStock}><p>Stock</p></li>
                     <li className="hoverable" onClick={this.handlePendingActions}><p>Pending</p></li>
-                    <li className="hoverable" onClick={this.handleLogout}><p>Logout</p></li>
+                    <li className="hoverable" onClick={this.handleScore}><p>Logout</p></li>
                   </ul>
                 </div>
               </div>

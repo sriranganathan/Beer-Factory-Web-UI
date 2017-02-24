@@ -58,7 +58,7 @@ var Leaderboard = React.createClass({
     if(this.props.hr < 360)
       return (
         <div>
-          <Button style = {style} color={Colors.PRIMARY} onClick={this.handleClick('leaderboard')}>Leaderboard</Button>
+          {/*<Button style = {style} color={Colors.PRIMARY} onClick={this.handleClick('leaderboard')}>Leaderboard</Button>*/}
           <Button style = {style} color={Colors.SUCCESS} onClick={this.handleClick('game')}>Continue Game</Button>
           <Button style = {style} color={Colors.ALERT} onClick={this.handleClick('logout')}>Logout</Button>
         </div>
@@ -82,8 +82,7 @@ var Leaderboard = React.createClass({
       var {day, hr} = convertHrtoDays(this.props.hr);
       return (
         <div style={{color: 'white', fontSize:'1.3rem'}}>
-            <p>Your Rank - {rank}</p>
-            <p>Your Score - {factory.user_score}</p>
+          <p>The Main event Starts tomorrow!</p>
         </div>
       );
     } else {
