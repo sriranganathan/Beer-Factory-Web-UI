@@ -39,6 +39,7 @@ module.exports = {
       Advertisement: 'app/components/MenuComponents/Advertisement.jsx',
       API: 'app/api/API.js',
       applicationStyles: 'app/styles/app.scss',
+      Assistant: 'app/components/Assistant.jsx',
       BeerFactory: 'app/components/BeerFactory.jsx',
       BuildWarehouse: 'app/components/GameActions/BuildWarehouse.jsx',
       configureStore: 'app/store/ConfigureStore.jsx',

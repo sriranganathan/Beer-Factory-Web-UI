@@ -6,11 +6,12 @@ var {UserDetailsReducer, GameDetailsReducer, MenuDetailsReducer,
      LayoutDetailsReducer, MiscReducer, FactoryReducer, WarehousesReducer,
      OpponentWarehousesReducer, DemandsReducer, EventsReducer,
      NotificationsReducer, PopularityReducer, ProgressReducer, NamesReducer,
-     SupplyProgressReducer} = require('Reducers')
+     SupplyProgressReducer, AssistantReducer} = require('Reducers')
 
 export var configure = (initialState = {}) => {
 
   var reducer = redux.combineReducers({
+    assistant: AssistantReducer,
     demands: DemandsReducer,
     events: EventsReducer,
     factory: FactoryReducer,

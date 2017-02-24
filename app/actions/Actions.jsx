@@ -167,3 +167,27 @@ export var addPendingWarehouse = (warehouse) => {
     warehouse
   };
 };
+
+export var showAssistant = () => {
+  return {
+    'type': 'SHOW_ASSISTANT'
+  };
+};
+
+export var hideAssistant = () => {
+  return {
+    'type': 'HIDE_ASSISTANT'
+  };
+};
+
+export var prevAssistant = () => {
+  return {
+    'type': 'PREVIOUS_ASSISTANT'
+  };
+};
+
+export var nextAssistant = () => {
+  return {
+    'type': 'NEXT_ASSISTANT'
+  };
+};

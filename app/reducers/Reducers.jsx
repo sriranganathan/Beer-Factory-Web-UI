@@ -437,3 +437,72 @@ export var SupplyProgressReducer = (state = [], action) => {
   }
 
 };
+
+var AssistantState = {
+  messages: [
+    'Hey!, Welcome to beer factory, click next to continue',
+    'You control the whole factory. To see the details of the factory click on the green central icon',
+    'The dark green spaces indicate the active spaces of the map',
+    'Click on the green spaces to view more details about the space',
+    'The light gray spaces indicate the inactive spaces of the map',
+    'These spaces get unlocked as the game progresses',
+    'The Spaces with the blue label on the bottom right are Retailers',
+    'The Retailers place Demands with you, which you have to fulfill',
+    'The Factory produce beers, make sure you aniticipate the demands and order them before hand',
+    'Click on the retailers to see demands or your popularity. The retailer\'s demand depends upon the popularity',
+    'More popularity with the retailers, mean more demands which in turn mean more profit',
+    'They are many ways to increase this popularity, supplying more to the retailer, supplying quickly and advertising near a retailer',
+    'Adverising in a location increase your popularity with nearby retailers',
+    'One Way to supply beers more quickly is to build warehouses in empty spaces, which can store beers for you',
+    'To build a warehouse or advertise click on a empty space. To build a warehouse you need a larger space.',
+    'You have a warehouse inbuilt inside you factory. Use the warehouses to supply the retailers',
+    'Warehouses are spaces that have a red label on the bottom left',
+    'There is a Computer simulated Opponent factory, who will be competing against you with the same set of retailers',
+    'Beat the opponent to get extra score and increase your chance of winning',
+    'Have fun. Click the close to close start playing'
+  ],
+  current: 0,
+  display: false
+};
+
+var getPrev = (current) => {
+  if(current === 0)
+    return 0;
+  return current-1;
+}
+
+var getNext = (current, len) => {
+  if(current === len-1)
+    return current;
+  return current+1;
+}
+
+
+export var AssistantReducer = (state = AssistantState, action) => {
+
+  switch (action.type) {
+    case 'HIDE_ASSISTANT':
+      return {
+        ...state,
+        display: false
+      };
+    case 'SHOW_ASSISTANT':
+      return {
+        ...state,
+        display: true
+      };
+    case 'PREVIOUS_ASSISTANT':
+      return {
+        ...state,
+        current: getPrev(state.current)
+      };
+    case 'NEXT_ASSISTANT':
+      return {
+        ...state,
+        current: getNext(state.current, state.messages.length)
+      };
+    default:
+      return state;
+  }
+
+}
