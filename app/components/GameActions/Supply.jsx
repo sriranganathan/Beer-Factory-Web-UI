@@ -178,8 +178,10 @@ var Supply = React.createClass({
                 </div>
             );
         }
-
-        return demands[selected].map(generateRetailerElement);
+        if (demands[selected] === undefined)
+            return demands[selected].map(generateRetailerElement);
+        else
+            return false;
 
     },
 
